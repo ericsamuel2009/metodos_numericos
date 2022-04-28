@@ -8,9 +8,6 @@ import Layout from '@/layout'
 
 /* Router Modules */
 import PagosRecibidos from './modules/pagosRecibidos'
-// import chartsRouter from './modules/charts'
-// import tableRouter from './modules/table'
-// import nestedRouter from './modules/nested'
 
 export const constantRoutes = [
   {
