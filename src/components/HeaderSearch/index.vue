@@ -22,7 +22,7 @@
 // make search results more in line with expectations
 import Fuse from 'fuse.js'
 import path from 'path'
-
+import { mapGetters } from 'vuex'
 export default {
   name: 'HeaderSearch',
   data() {
@@ -35,8 +35,11 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('permission', [
+      'permission_routes'
+    ]),
     routes() {
-      return this.$store.getters.permission_routes
+      return this.permission_routes
     }
   },
   watch: {

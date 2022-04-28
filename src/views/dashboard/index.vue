@@ -18,14 +18,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('user', [
       'roles'
     ])
   },
   created() {
-    if (!this.roles.includes('admin')) {
-      this.currentRole = 'editorDashboard'
-    }
+    console.log('roles', this.roles)
+    // if (!this.roles.includes('admin')) {
+    //   this.currentRole = 'editorDashboard'
+    // }
   }
 }
 </script>

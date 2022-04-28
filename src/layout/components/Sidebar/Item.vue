@@ -19,6 +19,8 @@ export default {
     if (icon) {
       if (icon.includes('el-icon')) {
         vnodes.push(<i class={[icon, 'sub-el-icon']} />)
+      } else if (icon.includes('mdi')) {
+        vnodes.push(<i class={[icon, 'mdi svg-icon']} />)
       } else {
         vnodes.push(<svg-icon icon-class={icon}/>)
       }
@@ -33,9 +35,10 @@ export default {
 </script>
 
 <style scoped>
-.sub-el-icon {
+.sub-el-icon, .mdi {
   color: currentColor;
   width: 1em;
   height: 1em;
+  font-size: 20px;
 }
 </style>

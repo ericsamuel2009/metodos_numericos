@@ -9,3 +9,6 @@ export default {
   name: 'App'
 }
 </script>
+<style lang="sass">
+@import url("./assets/icon/MaterialDesign/css/materialdesignicons.css")
+</style>

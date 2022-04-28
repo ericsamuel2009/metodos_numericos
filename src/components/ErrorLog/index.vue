@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
   name: 'ErrorLog',
   data() {
@@ -55,6 +56,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters('errorLogs', [
+      'errorLogs'
+    ]),
     errorLogs() {
       return this.$store.getters.errorLogs
     }

@@ -31,7 +31,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
+    ...mapGetters('user', [
       'name',
       'avatar',
       'roles'
