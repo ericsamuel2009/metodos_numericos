@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     size() {
-      return this.$store.getters.size
+      return this.$store.getters['app/size']
     }
   },
   methods: {

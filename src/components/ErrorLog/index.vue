@@ -60,7 +60,7 @@ export default {
       'errorLogs'
     ]),
     errorLogs() {
-      return this.$store.getters.errorLogs
+      return this.errorLogs
     }
   },
   methods: {

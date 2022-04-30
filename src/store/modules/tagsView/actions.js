@@ -62,7 +62,6 @@ export function delOthersCachedViews({ commit, state }, view) {
 }
 
 export function delAllViews({ dispatch, state }, view) {
-  console.log('ENTRO')
   return new Promise(resolve => {
     dispatch('delAllVisitedViews', view)
     dispatch('delAllCachedViews', view)

@@ -39,9 +39,6 @@ export default {
     // }),
     ...mapState('app', ['sidebar', 'device']),
     ...mapState('settings', ['showSettings', 'tagsView', 'fixedHeader']),
-    created() {
-        console.log("as;ldm");
-    },
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,

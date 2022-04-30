@@ -374,9 +374,6 @@ export default {
       const sort = this.listQuery.sort
       return sort === `+${key}` ? 'ascending' : 'descending'
     }
-  },
-  destroyed() {
-    console.log('alsdiofjasd;kfn')
   }
 }
 </script>

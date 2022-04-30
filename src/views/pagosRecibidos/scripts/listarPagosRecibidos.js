@@ -24,12 +24,9 @@ export default {
     }
   },
   methods: {
+    // ...mapActions('pagosRecibidos', ['getTodosPagosRecibidosList']),
       async consultarPagosRecibidos() {
-        const loading = this.$vs.loading({
-            text: 'Cargando...'
-        })
-    await this.getTodosPagosRecibidosList();
-        loading.close()
+        await this.getTodosPagosRecibidosList();
         const { response, status } = this.todosPagosRecibidosResponseList
         if (validarStatus(status,this.$vs)) {
             this.aPagosRecibidos = response
@@ -41,5 +38,8 @@ export default {
     handleDelete(index, row) {
       console.log(index, row)
     }
-  }
+  },
+  created() {
+    
+  },
 }
