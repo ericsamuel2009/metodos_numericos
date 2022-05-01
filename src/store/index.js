@@ -7,11 +7,18 @@ import app from './modules/app'
 import user from './modules/user'
 import settings from './modules/setting'
 import errorLog from './modules/errorLog'
+import pagosRecibidos from './modules/pagosRecibidos'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   modules: {
-    permission, tagsView, app, user, settings, errorLog
+    permission,
+    tagsView,
+    app,
+    user,
+    settings,
+    errorLog,
+    pagosRecibidos
   }
 
 })

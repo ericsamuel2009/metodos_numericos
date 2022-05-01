@@ -8,7 +8,7 @@ const componentsRouter = {
   name: 'pagosEfectuados',
   meta: {
     title: 'Egresos',
-    icon: 'mdi-cash-plus'
+    icon: 'mdi-cash-minus'
   },
   children: [
     {

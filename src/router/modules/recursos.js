@@ -8,7 +8,7 @@ const componentsRouter = {
   name: 'recursos',
   meta: {
     title: 'Recursos',
-    icon: 'mdi-cash-plus'
+    icon: 'mdi-alpha-r-circle-outline'
   },
   children: [
     {

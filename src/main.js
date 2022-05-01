@@ -12,15 +12,22 @@ import './icons'
 import './permission'
 import './utils/error-log'
 import * as filters from './filters' // global filters
-
+import VueRx from 'vue-rx'
+const moment = require('moment')
+require('moment/locale/es')
+import VCalendar from 'v-calendar'
 if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
 
-Vue.use(Element, {
+Vue.use(VueRx).use(Element, {
   size: Cookies.get('size') || 'medium',
   locale: enLang
+}).use(require('vue-moment'), {
+  moment
+}).use(VCalendar, {
+  componentPrefix: 'vc'
 })
 
 Object.keys(filters).forEach(key => {
