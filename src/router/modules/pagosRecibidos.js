@@ -18,6 +18,13 @@ const componentsRouter = {
       meta: { title: 'Listar Ingresos' }
     },
     {
+      path: 'editar/:referencia',
+      component: () => import('@/views/pagosRecibidos/templates/editarPagosRecibidos'),
+      name: 'EditarrPagosRecibidos',
+      meta: { title: 'Editar Ingreso', noCache: true, activeMenu: '/pagosRecibidos/list' },
+      hidden: true
+    },
+    {
       path: 'agregar',
       component: () => import('@/views/pagosRecibidos/templates/agregarPagosRecibidos'),
       name: 'AgregarPagosRecibidos',

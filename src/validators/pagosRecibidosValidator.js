@@ -4,10 +4,9 @@ import {
   VALIDAR_ESTATUS,
   INFORMACION_MENSAJE_NOTIFICACION
 } from '@/utils/constantes'
-// import methodsMixins from '@/mixins/methodsMixins'
+import methodsMixins from '@/mixins/methodsMixins'
 export function validacionCamposVacios(ingresosAValidar) {
   const { cliente, motivo, monto } = ingresosAValidar
-  console.log(cliente)
   if (validarNullUndefineVacioNan(cliente)) {
     alert('DEBE AGREGAR UN CLIENTE')
     return
@@ -46,53 +45,41 @@ export function validarNullUndefineVacioNan(valor) {
   return [NaN, undefined, null, ''].includes(valor)
 }
 
-export function validarStatus(status, vs) {
-  const statusResponse500 =
-    status?.toString()?.match(VALIDAR_ESTATUS.STATUS_500) ||
-    [0].includes(status)
-  const statusResponse400 = status
-    ?.toString()
-    ?.match(VALIDAR_ESTATUS.STATUS_400)
+export function validarStatus(status) {
+  console.log(status)
+  const errorConeccion = [0].includes(status)
+  const statusResponse500 = status?.toString()?.match(VALIDAR_ESTATUS.STATUS_500)
+  const statusResponse400 = status?.toString()?.match(VALIDAR_ESTATUS.STATUS_400)
+  if (errorConeccion) {
+    notificacion(
+      INFORMACION_MENSAJE_NOTIFICACION.ES_MENSAJE_CLOSE_TRUE,
+      INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_CONEXION_LOST,
+      INFORMACION_MENSAJE_NOTIFICACION.TIPO_DE_MENSAJE_ERROR
+    )
+    console.log(`ERROR DE CONEXION.... (ノಠ益ಠ) ┻━┻`)
+    return true
+  }
   if (statusResponse500) {
     notificacion(
-      INFORMACION_MENSAJE_NOTIFICACION.MENSAJE_FLAT_ACTIVO,
-      null,
-      INFORMACION_MENSAJE_NOTIFICACION.COLOR_DE_MENSAJE_ERROR,
-      INFORMACION_MENSAJE_NOTIFICACION.ICONO_DEL_MENSAJE('mdi-progress-close'),
-      INFORMACION_MENSAJE_NOTIFICACION.POSICION_ARRIBA_IZQUIERDA_DEL_MENSAJE,
-      INFORMACION_MENSAJE_NOTIFICACION.TITULO_ERROR_CONEXION,
-      INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_ERROR_CONEXION,
-      vs
+      INFORMACION_MENSAJE_NOTIFICACION.ES_MENSAJE_CLOSE_TRUE,
+      INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_ERROR_CONEXION_500,
+      INFORMACION_MENSAJE_NOTIFICACION.TIPO_DE_MENSAJE_ERROR
     )
     console.log(`ERROR DE CONEXION.... (╯ ͠° ͟ʖ ͡°)╯┻━┻`)
-    return false
+    return true
   }
   if (statusResponse400) {
     notificacion(
-      INFORMACION_MENSAJE_NOTIFICACION.MENSAJE_FLAT_ACTIVO,
-      undefined,
-      INFORMACION_MENSAJE_NOTIFICACION.COLOR_DE_MENSAJE_ERROR,
-      INFORMACION_MENSAJE_NOTIFICACION.ICONO_DEL_MENSAJE('mdi-progress-close'),
-      INFORMACION_MENSAJE_NOTIFICACION.POSICION_ARRIBA_IZQUIERDA_DEL_MENSAJE,
-      INFORMACION_MENSAJE_NOTIFICACION.TITULO_BAD_REQUEST,
-      INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_BAD_REQUEST,
-      vs
+      INFORMACION_MENSAJE_NOTIFICACION.ES_MENSAJE_CLOSE_TRUE,
+      INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_BAD_REQUEST_400,
+      INFORMACION_MENSAJE_NOTIFICACION.TIPO_DE_MENSAJE_ERROR
     )
     console.log(`ERROR DE BAD REQUEST.... ಠ益ಠ`)
-    return false
+    return true
   }
-  return true
+  return false
 }
 
-export function notificacion(
-  flat = null,
-  progress = null,
-  color = INFORMACION_MENSAJE_NOTIFICACION.COLOR_DE_MENSAJE_PRIMARIO,
-  icono = null,
-  posicion = null,
-  titulo = INFORMACION_MENSAJE_NOTIFICACION.TITULO_DEFAULT,
-  descripcion = INFORMACION_MENSAJE_NOTIFICACION.DESCRIPCION_DEFAULT,
-  vs
-) {
-  // methodsMixins.methods.mesajeDeRespuestas( flat, progress, color, icono, posicion, titulo, descripcion, vs)
+export function notificacion(showClose, message, type) {
+  methodsMixins.methods.message(showClose, message, type)
 }

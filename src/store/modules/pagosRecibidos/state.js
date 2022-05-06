@@ -1,5 +1,7 @@
 export default function() {
   return {
-    todosPagosRecibidosResponseList: []
+    todosPagosRecibidosResponseList: [],
+    unPagoRecibido: [],
+    estadoDeletePagosRecibido: []
   }
 }
