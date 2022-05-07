@@ -19,30 +19,17 @@
 
       <el-table-column v-if="isEditable || isDelete" label="Acciones" align="center" :width="widthDinamic" class-name="small-padding fixed-width">
         <template slot-scope="{row}">
-          <el-button v-if="isEditable" type="primary" size="mini" @click="editar(row)">{{textEditarBtn}}</el-button>
-          <!-- <el-popconfirm
-            confirm-button-text='Si'
-            cancel-button-text='No, Gracias'
+          <el-button v-if="isEditable" type="primary" size="mini" @click="editar(row)">{{ textEditarBtn }}</el-button>
+          <el-popconfirm
+            confirm-button-text="Si"
+            cancel-button-text="No, Gracias"
             icon="el-icon-info"
             icon-color="red"
             title="Seguro De Eliminarlo?"
-            @confirm="eliminar"
+            @onConfirm="eliminar(row)"
           >
-            <el-button slot="reference" type="danger" size="mini" plain>Delete</el-button>
-          </el-popconfirm> -->
-
-          <!-- <template slot-scope="scope"> -->
-            <el-popconfirm
-                      confirm-button-text='Si'
-                      cancel-button-text='No, Gracias'
-                      icon="el-icon-info"
-                      icon-color="red"
-                      title="Seguro De Eliminarlo?"
-                      @confirm="eliminar(row)">
-                <el-button slot="reference">删除</el-button>
-            </el-popconfirm>
-          <!-- </template> -->
-          <!-- <el-button v-if="isDelete" type="text" size="mini" @click="eliminar(row)">{{textDeteleBtn}}</el-button> -->
+            <el-button v-if="isDelete" slot="reference" type="text" size="mini">{{ textDeteleBtn }}</el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -106,8 +93,8 @@ export default {
       width: '40px',
       height: '40px',
       'border-radius': '4px',
-      'line-height': '45px', // 请保持与高度一致以垂直居中 Please keep consistent with height to center vertically
-      background: '#e7eaf1'// 按钮的背景颜色 The background color of the button
+      'line-height': '45px',
+      background: '#e7eaf1'
     }
   }),
   computed: {
@@ -125,9 +112,9 @@ export default {
     }
   },
   methods: {
-    eliminar() {
+    eliminar(valor) {
       console.log('valor')
-      // this.$emit('triggerDelete', valor)
+      this.$emit('triggerDelete', valor)
     },
     editar(valor) {
       this.$router.push(`${this.to}/${valor.referencia}`)

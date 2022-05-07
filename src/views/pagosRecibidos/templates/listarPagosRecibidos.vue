@@ -26,6 +26,7 @@
           </el-form-item>
         </el-form>
       </div>
+      <!-- <filter-dinamica /> -->
       <tabla-dinamica
         to="/pagosRecibidos/editar"
         is-delete
@@ -56,7 +57,4 @@
 </template>
 
 <script src="@/views/pagosRecibidos/scripts/listarPagosRecibidos.js"></script>
-<style
-  src="@/views/pagosRecibidos/styles/listarPagosRecibidos.css"
-  scoped
-></style>
+<style src="@/views/pagosRecibidos/styles/listarPagosRecibidos.css" scoped></style>

@@ -1,6 +1,7 @@
 import { mapActions, mapGetters } from 'vuex'
 import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
 import TablaDinamica from '@/components/tableDinamic'
+// import FilterDinamic  from '@/components/filterDinamic'
 import { validarStatus } from '@/validators/pagosRecibidosValidator'
 // import Calendar from 'tui-calendar'
 export default {
@@ -69,6 +70,9 @@ export default {
     ...mapActions('pagosRecibidos', ['getTodosPagosRecibidos', 'deleteUnPagoRecibido']),
     editarPagoRecibido(valorEditar) {
       console.log(valorEditar)
+    },
+    eliminar() {
+      console.log('asldn')
     },
     async eliminarPagoRecibido(valorEliminar) {
       await this.deleteUnPagoRecibido(valorEliminar.referencia)
