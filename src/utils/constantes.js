@@ -30,3 +30,5 @@ export const INFORMACION_MENSAJE_NOTIFICACION = {
 }
 export const INTENTO_CONEXION = 5
 export const PREFIX_PAGOS_RECIBIDOS = 'pagosrecibidos'
+export const PREFIX_CATEGORIAS = 'categorias'
+export const PREFIX_CONCEPTO = 'concepto'

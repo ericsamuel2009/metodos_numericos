@@ -1,8 +1,7 @@
 // eslint-disable-next-line
-import { pipe, retry, of, finalize, lastValueFrom } from 'rxjs'
-import { catchError } from 'rxjs/operators'
-import { ajax } from 'rxjs/ajax'
-import { INTENTO_CONEXION, PREFIX_PAGOS_RECIBIDOS } from '@/utils/constantes'
+import { lastValueFrom } from 'rxjs'
+import { PREFIX_PAGOS_RECIBIDOS } from '@/utils/constantes'
+import { metodoParaConsultar, convertUrl } from '@/shared'
 export async function getTodosPagosRecibidos({ commit }, queryFilter) {
   const nuevoPath = convertUrl(queryFilter.filter)
   const responseObservavleToPromise$ = await lastValueFrom(
@@ -37,27 +36,4 @@ export async function deleteUnPagoRecibido({ commit }, referencia) {
     )
   )
   commit('setDeleteUnPagosRecibido', responseObservavleToPromise$)
-}
-
-// FUNCIONES REQUERIDAS
-export function metodoParaConsultar(url, method, headers = null, body = null) {
-  return ajax({ url, method, headers, body }).pipe(
-    retry(INTENTO_CONEXION),
-    catchError((err) => of(err)),
-    finalize(() => console.log(`✨ PETICION ${method} FINALIZADA ✨`))
-  )
-}
-
-export function convertUrl(valor) {
-  let urlConcat = ''
-  for (const resultnew in valor) {
-    if (
-      valor[resultnew] &&
-      valor[resultnew] !== '' &&
-      Object.entries(valor[resultnew]).length > 0
-    ) {
-      urlConcat += `${resultnew}=${valor[resultnew]}&`
-    }
-  }
-  return urlConcat
 }

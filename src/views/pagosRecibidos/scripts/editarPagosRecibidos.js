@@ -1,6 +1,6 @@
 
 import { mapActions, mapGetters } from 'vuex'
-import { validarStatus } from '@/validators/pagosRecibidosValidator'
+import { validarStatus } from '@/validators/shared.validator'
 const formModels = oFormModels()
 const rules = oReglas()
 
@@ -43,7 +43,6 @@ export default {
     submitForm() {
       console.log(this.postForm)
     },
-    draftForm() {},
     async buscarPagoReciibido(referencia) {
       this.loading = true
       await this.getUnPagosRecibido(referencia)

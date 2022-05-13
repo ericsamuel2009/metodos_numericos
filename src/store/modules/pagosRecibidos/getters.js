@@ -3,6 +3,7 @@ export function aTodosPagosRecibidos(state) {
 }
 
 export function oUnPagoRecibido(state) {
+  console.log('state', state.unPagoRecibido)
   return state.unPagoRecibido
 }
 

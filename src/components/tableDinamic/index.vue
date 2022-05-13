@@ -9,27 +9,12 @@
         :prop="main.valor"
         :width="main.width"
         :sortable="main.sortable"
+        empty-text="No"
       >
         <template slot-scope="{ row }">
           <slot :name="main.valor" :row="row">
             {{ row[main.valor] }}
           </slot>
-        </template>
-      </el-table-column>
-
-      <el-table-column v-if="isEditable || isDelete" label="Acciones" align="center" :width="widthDinamic" class-name="small-padding fixed-width">
-        <template slot-scope="{row}">
-          <el-button v-if="isEditable" type="primary" size="mini" @click="editar(row)">{{ textEditarBtn }}</el-button>
-          <el-popconfirm
-            confirm-button-text="Si"
-            cancel-button-text="No, Gracias"
-            icon="el-icon-info"
-            icon-color="red"
-            title="Seguro De Eliminarlo?"
-            @onConfirm="eliminar(row)"
-          >
-            <el-button v-if="isDelete" slot="reference" type="text" size="mini">{{ textDeteleBtn }}</el-button>
-          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -79,9 +64,9 @@ export default {
       type: [Boolean],
       default: false
     },
-    to: {
-      type: [String],
-      default: ''
+    loadBtn: {
+      type: [Boolean],
+      default: false
     }
   },
   data: () => ({
@@ -113,11 +98,10 @@ export default {
   },
   methods: {
     eliminar(valor) {
-      console.log('valor')
       this.$emit('triggerDelete', valor)
     },
     editar(valor) {
-      this.$router.push(`${this.to}/${valor.referencia}`)
+      this.$emit('triggerEditable', valor)
     }
   }
 }

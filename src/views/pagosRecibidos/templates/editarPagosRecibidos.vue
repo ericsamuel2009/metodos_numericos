@@ -47,7 +47,6 @@
               </div>
             </el-col>
           </el-row>
-          {{ dataToEdit.fechapago }}
           <el-form-item label="Comentario">
             <el-input
               v-model="dataToEdit.comentario"

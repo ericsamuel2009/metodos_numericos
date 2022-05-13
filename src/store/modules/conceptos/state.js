@@ -1,7 +1,6 @@
-export default function () {
-    return {
-        conceptosList: [],
-        conceptoResponse: [],
-        deleteConceptoResponse: null
-    }
+export default function() {
+  return {
+    conceptosList: [],
+    conceptoResponse: []
+  }
 }

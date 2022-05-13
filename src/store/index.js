@@ -8,6 +8,8 @@ import user from './modules/user'
 import settings from './modules/setting'
 import errorLog from './modules/errorLog'
 import pagosRecibidos from './modules/pagosRecibidos'
+import categorias from './modules/categorias'
+import conceptos from './modules/conceptos'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -18,7 +20,9 @@ const store = new Vuex.Store({
     user,
     settings,
     errorLog,
-    pagosRecibidos
+    pagosRecibidos,
+    categorias,
+    conceptos
   }
 
 })

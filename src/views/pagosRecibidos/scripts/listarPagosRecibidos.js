@@ -1,9 +1,10 @@
 import { mapActions, mapGetters } from 'vuex'
-import Pagination from '@/components/Pagination' // Secondary package based on el-pagination
+import Pagination from '@/components/Pagination'
 import TablaDinamica from '@/components/tableDinamic'
 // import FilterDinamic  from '@/components/filterDinamic'
-import { validarStatus } from '@/validators/pagosRecibidosValidator'
-// import Calendar from 'tui-calendar'
+import { validarStatus } from '@/validators/shared.validator'
+import dataMixins from '@/mixins/dataMixins'
+import methodsMixins from '@/mixins/methodsMixins'
 export default {
   name: 'ListarPagosRecibidos',
   data() {
@@ -17,10 +18,6 @@ export default {
         cliente: null,
         monto: null,
         fechapago: null
-      },
-      listQuery: {
-        page: 1,
-        limit: 10
       },
       aTablaCabecera: [
         {
@@ -63,21 +60,21 @@ export default {
     }
   },
   components: { Pagination, TablaDinamica },
+  mixins: [dataMixins, methodsMixins],
   computed: {
     ...mapGetters('pagosRecibidos', ['aTodosPagosRecibidos', 'sDeletePagosRecibidos'])
   },
   methods: {
     ...mapActions('pagosRecibidos', ['getTodosPagosRecibidos', 'deleteUnPagoRecibido']),
-    editarPagoRecibido(valorEditar) {
-      console.log(valorEditar)
-    },
-    eliminar() {
-      console.log('asldn')
-    },
     async eliminarPagoRecibido(valorEliminar) {
+      const { cliente } = valorEliminar
       await this.deleteUnPagoRecibido(valorEliminar.referencia)
+      this.notification('Ok', `El Cliente ${cliente} fue Eliminado`, 'success')
       this.consultarPagosRecibidos()
       console.log(this.sDeletePagosRecibidos)
+    },
+    editarPagoRecibido(valorEditar) {
+      this.$router.push(`/pagosRecibidos/editar/${valorEditar.referencia}`)
     },
     async consultarPagosRecibidos() {
       this.listLoading = true

@@ -28,21 +28,21 @@
       </div>
       <!-- <filter-dinamica /> -->
       <tabla-dinamica
-        to="/pagosRecibidos/editar"
         is-delete
         is-editable
         :datos="tableData"
         :tablacabecera="aTablaCabecera"
         :list-loading="listLoading"
         @triggerDelete="eliminarPagoRecibido"
+        @triggerEditable="editarPagoRecibido"
       >
-        <template v-slot:monto="{ row }">
+        <template #monto="{ row }">
           {{ row.monto | toCurrency }}
         </template>
-        <template v-slot:fechapago="{ row }">
+        <template #fechapago="{ row }">
           {{ row.fechapago | moment('YYYY-MM-DD') }}
         </template>
-        <template v-slot:comentario="{ row }">
+        <template #comentario="{ row }">
           {{ row.comentario | limiteCaracteresFiltro }}
         </template>
       </tabla-dinamica>
