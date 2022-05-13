@@ -29,7 +29,7 @@
             <el-col :xs="26" :sm="3" :md="3" :lg="3" :xl="3">
               <div class="grid-content">
                 <el-form-item label="Monto" prop="monto">
-                  <el-input v-model="dataToEdit.monto" />
+                  <el-input v-model.number="dataToEdit.monto" />
                 </el-form-item>
               </div>
             </el-col>

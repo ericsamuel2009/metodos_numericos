@@ -97,11 +97,11 @@ function oReglas() {
     ],
     monto: [
       {
-        type: 'number',
         required: true,
         message: 'El campo Monto es Requerido',
         trigger: 'blur'
-      }
+      },
+      { type: 'number', message: 'monto Debe ser Numerico', trigger: 'blur' }
     ],
     fechapago: [
       {

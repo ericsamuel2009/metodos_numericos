@@ -25,7 +25,8 @@ export default {
           valor: 'referencia',
           align: 'center',
           width: '120',
-          sortable: true
+          sortable: true,
+          fixed: 'left'
         },
         {
           titulo: 'Cliente',
@@ -50,11 +51,17 @@ export default {
         },
         { titulo: 'Comentario', valor: 'comentario' },
         {
-          titulo: 'Pagos de Pago',
+          titulo: 'Fecha de Pago',
           valor: 'fechapago',
           align: 'center',
           width: '170',
           sortable: true
+        },
+        {
+          titulo: 'Accion',
+          valor: 'accion',
+          align: 'center',
+          width: '150'
         }
       ]
     }

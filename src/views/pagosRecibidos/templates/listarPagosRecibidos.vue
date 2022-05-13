@@ -28,14 +28,15 @@
       </div>
       <!-- <filter-dinamica /> -->
       <tabla-dinamica
-        is-delete
-        is-editable
         :datos="tableData"
         :tablacabecera="aTablaCabecera"
         :list-loading="listLoading"
-        @triggerDelete="eliminarPagoRecibido"
-        @triggerEditable="editarPagoRecibido"
       >
+        <template #referencia="{ row }">
+          <span title="editar" class="link-type" @click="editarPagoRecibido(row)">
+            {{ row.referencia }}
+          </span>
+        </template>
         <template #monto="{ row }">
           {{ row.monto | toCurrency }}
         </template>
@@ -44,6 +45,21 @@
         </template>
         <template #comentario="{ row }">
           {{ row.comentario | limiteCaracteresFiltro }}
+        </template>
+        <template #accion="{row}">
+          <!-- <el-button type="text" size="mini" >Editar</el-button> -->
+          <el-popconfirm
+            confirm-button-text="Si"
+            cancel-button-text="No, Gracias"
+            icon="el-icon-info"
+            icon-color="red"
+            title="Seguro De Eliminarlo?"
+            @onConfirm="eliminarPagoRecibido(row)"
+          >
+            <slot name="delete">
+              <el-button slot="reference" type="text" size="mini">Eliminar</el-button>
+            </slot>
+          </el-popconfirm>
         </template>
       </tabla-dinamica>
     </div>

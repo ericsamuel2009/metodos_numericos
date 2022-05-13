@@ -1,6 +1,6 @@
 <template>
   <div id="TableDinamic">
-    <el-table v-loading="listLoading" :data="datosComputados" border>
+    <el-table v-loading="listLoading" :data="datos" border>
       <el-table-column
         v-for="(main,index) in tablacabecera"
         :key="index"
@@ -8,6 +8,7 @@
         :align="main.align"
         :prop="main.valor"
         :width="main.width"
+        :fixed="main.fixed"
         :sortable="main.sortable"
         empty-text="No"
       >
@@ -88,13 +89,13 @@ export default {
         return '200'
       }
       return '100'
-    },
-    datosComputados() {
-      this.datos.map(informationResponse => {
-        informationResponse.tablacabecera = this.tablacabecera
-      })
-      return this.datos
     }
+    // datosComputados() {
+    //   this.datos.map(informationResponse => {
+    //     informationResponse.tablacabecera = this.tablacabecera
+    //   })
+    //   return this.datos
+    // }
   },
   methods: {
     eliminar(valor) {
