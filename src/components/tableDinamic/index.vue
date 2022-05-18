@@ -1,6 +1,6 @@
 <template>
   <div id="TableDinamic">
-    <el-table v-loading="listLoading" :data="datos" border>
+    <el-table v-loading="listLoading" :show-summary="summary" :summary-method="getSummaries" :data="datos" border>
       <el-table-column
         v-for="(main,index) in tablacabecera"
         :key="index"
@@ -68,6 +68,10 @@ export default {
     loadBtn: {
       type: [Boolean],
       default: false
+    },
+    summary: {
+      type: [Boolean],
+      default: false
     }
   },
   data: () => ({
@@ -103,6 +107,41 @@ export default {
     },
     editar(valor) {
       this.$emit('triggerEditable', valor)
+    },
+    toCurrency(valorACurrency) {
+      const currency = parseInt(valorACurrency)
+      if ([NaN, undefined, null, ''].includes(currency)) return '$ ' + 0
+      var formatter = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+      })
+      return formatter.format(currency)
+    },
+    getSummaries(param) {
+      const { columns, data } = param
+      const sums = []
+      columns.forEach((column, index) => {
+        if (index === 0) {
+          sums[index] = 'Total Costo'
+          return
+        }
+        const values = data.map(item => Number(item[column.property]))
+        if (!values.every(value => isNaN(value) || !value)) {
+          sums[index] = this.toCurrency(values.reduce((prev, curr) => {
+            const value = Number(curr)
+            if (!isNaN(value)) {
+              return prev + curr
+            } else {
+              return prev
+            }
+          }, 0))
+        } else {
+          sums[index] = '---'
+        }
+      })
+
+      return sums
     }
   }
 }

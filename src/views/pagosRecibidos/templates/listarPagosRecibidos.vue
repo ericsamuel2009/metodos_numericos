@@ -22,7 +22,7 @@
             <el-button type="primary" round @click="consultarPagosRecibidos">Consultar</el-button>
           </el-form-item>
           <el-form-item size="mini">
-            <el-button type="primary" round @click="consultarPagosRecibidos">Agregar</el-button>
+            <el-button type="info" plain round @click="agregarPagoRecibido">Agregar</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -31,6 +31,7 @@
         :datos="tableData"
         :tablacabecera="aTablaCabecera"
         :list-loading="listLoading"
+        summary
       >
         <template #referencia="{ row }">
           <span title="editar" class="link-type" @click="editarPagoRecibido(row)">

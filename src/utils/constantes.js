@@ -32,3 +32,4 @@ export const INTENTO_CONEXION = 5
 export const PREFIX_PAGOS_RECIBIDOS = 'pagosrecibidos'
 export const PREFIX_CATEGORIAS = 'categorias'
 export const PREFIX_CONCEPTO = 'concepto'
+export const PREFIX_USUARIO = 'usuarios'

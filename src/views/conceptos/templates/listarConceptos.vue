@@ -6,13 +6,17 @@
           <el-form-item label="Titulo">
             <el-input v-model="sizeForm.titulo" clearable />
           </el-form-item>
+          <el-form-item label="Categorias" prop="categoria">
+            <el-select v-model="sizeForm.categoria" clearable placeholder="Seleccione una Opcion">
+              <el-option v-for="main of aCategorias" :key="main.idc" :label="main.titulo" :value="main.idc" />
+            </el-select>
+          </el-form-item>
           <el-form-item label="Estado">
             <el-select v-model="sizeForm.estado" clearable placeholder="Seleccione una Opcion">
               <el-option label="Activo" value="1" />
               <el-option label="Inactivo" value="0" />
             </el-select>
           </el-form-item>
-
           <el-form-item size="mini">
             <el-button type="primary" round @click="consultaConceptos">Consultar</el-button>
           </el-form-item>
@@ -26,6 +30,9 @@
         :tablacabecera="aTablaCabecera"
         :list-loading="listLoading"
       >
+        <template #categorias="{row}">
+          {{ row.categorias.titulo }}
+        </template>
         <template #estado="{ row }">
           <el-tag :type="colorStatusHandler(row)" effect="dark">
             {{ row.estado | statusHandler }}
@@ -85,8 +92,10 @@ export default {
     return {
       listLoading: false,
       tableData: [],
+      aCategorias: [],
       sizeForm: {
         titulo: null,
+        categoria: null,
         estado: null
       },
       nTotalPaginas: 0,
@@ -94,17 +103,23 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('conceptos', ['gConceptos'])
+    ...mapGetters('conceptos', ['gConceptos']),
+    ...mapGetters('categorias', ['gCategoriasList'])
+  },
+  created() {
+    this.consultaConceptos()
+    this.consultaCategorias()
   },
   methods: {
     ...mapActions('conceptos', ['getListConceptos']),
+    ...mapActions('categorias', ['getCategorias']),
     async consultaConceptos() {
       this.listLoading = true
       const { page, limit } = this.listQuery
-      const { titulo, estado } = this.sizeForm
+      const { titulo, categoria, estado } = this.sizeForm
       const pageNumber = page - 1
       await this.getListConceptos({
-        filter: { titulo, estado },
+        filter: { titulo, categoria, estado },
         pageNumber,
         pageSize: limit
       })
@@ -114,15 +129,21 @@ export default {
       this.tableData = response?.content
       this.nTotalPaginas = response?.totalElements
     },
+    async consultaCategorias() {
+      await this.getCategorias({
+        pageNumber: 0,
+        pageSize: 50
+      })
+      const { response, status } = this.gCategoriasList
+      if (validarStatus(status)) return false
+      this.aCategorias = response?.content
+    },
     eliminarConcepto(valor) {
 
     },
     agregarConcepto() {
       this.$router.push(`/recursos/conceptos/crear`)
     }
-  },
-  created() {
-    this.consultaConceptos()
   }
 }
 
@@ -131,6 +152,11 @@ function aCategoriasReturn() {
     {
       titulo: 'Titulo',
       valor: 'titulo',
+      align: 'center'
+    },
+    {
+      titulo: 'Categoria',
+      valor: 'categorias',
       align: 'center'
     },
     {

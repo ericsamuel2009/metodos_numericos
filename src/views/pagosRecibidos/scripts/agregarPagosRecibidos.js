@@ -46,15 +46,15 @@ export default {
   mixins: [dataMixins, methodsMixins],
   filters: {
     toCurrency(valorACurrency) {
-        const currency = parseInt(valorACurrency)
-        if ([NaN, undefined, null, ''].includes(currency)) return '$ ' + 0
-        var formatter = new Intl.NumberFormat('es-CO', {
-            style: 'currency',
-            currency: 'COP',
-            minimumFractionDigits: 0
-        })
-        return formatter.format(currency)
-        }
+      const currency = parseInt(valorACurrency)
+      if ([NaN, undefined, null, ''].includes(currency)) return '$ ' + 0
+      var formatter = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+      })
+      return formatter.format(currency)
+    }
   },
   data() {
     return {
@@ -68,6 +68,11 @@ export default {
     }
   },
   components: { Pagination, TablaDinamica },
+  computed: {
+    registreCount() {
+      return this.tableData.length
+    }
+  },
   methods: {
     ...mapActions('pagosRecibidos', ['getSavePagosRecibidos']),
     async agregarPagoRecibido() {
@@ -99,6 +104,8 @@ export default {
     },
     async facturar() {
       await this.getSavePagosRecibidos(this.tableData)
+      this.tableData = []
+      this.notification('Ok', `Se Facturo El Pago Recibido`, 'success')
       //   this.tableData.push({})
     },
     eliminar(valorSeleccionado) {

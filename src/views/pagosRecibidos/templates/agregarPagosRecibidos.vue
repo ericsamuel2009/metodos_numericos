@@ -2,24 +2,57 @@
   <div id="pagosRecibidos">
     <div class="app-container">
       <div class="app-container">
-        <el-button type="primary" size="mini" @click="agregarPagoRecibido">Agregar</el-button>
-        <el-button type="primary" size="mini" @click="facturar">facturar pagos recibidos</el-button>
+        <el-row :gutter="10">
+          <el-col :xs="10" :sm="2" :md="2" :lg="2" :xl="2">
+            <el-button
+              type="primary"
+              size="mini"
+              @click="agregarPagoRecibido"
+            >Agregar</el-button>
+          </el-col>
+          <el-col :xs="10" :sm="2" :md="2" :lg="2" :xl="2">
+            <el-popconfirm
+              confirm-button-text="Si"
+              cancel-button-text="No, Gracias"
+              icon="el-icon-info"
+              icon-color="red"
+              :title="`Facturar ${registreCount} Registros?`"
+              @onConfirm="facturar"
+            >
+              <slot name="delete">
+                <el-button
+                  slot="reference"
+                  :disabled="registreCount == 0"
+                  type="info"
+                  size="mini"
+                  plain
+                >facturar pagos recibidos</el-button>
+              </slot>
+            </el-popconfirm>
+          </el-col>
+        </el-row>
       </div>
       <tabla-dinamica
         :datos="tableData"
         :tablacabecera="aTablaCabecera"
         :list-loading="listLoading"
+        summary
       >
-        <template #accion="{row}">
+        <template #accion="{ row }">
           <el-button type="text" @click="editar(row)">editar</el-button>
           <el-button type="text" @click="eliminar(row)">Eliminar</el-button>
         </template>
-        <template #monto="{row}">
-          {{row.monto | toCurrency}}
+        <template #monto="{ row }">
+          {{ row.monto | toCurrency }}
         </template>
       </tabla-dinamica>
 
-      <el-dialog title="add" :visible.sync="dialogFormVisible" width="40%" center>
+      <el-dialog
+        title="add"
+        :visible.sync="dialogFormVisible"
+        width="40%"
+        center
+      >
         <div class="createPost-container">
           <el-form
             ref="dataToAdd"
@@ -80,9 +113,7 @@
           <el-button type="primary" @click.prevent="onSubmit(dataToAdd)">
             Agregar
           </el-button>
-          <el-button @click.prevent="close">
-            Cancelar
-          </el-button>
+          <el-button @click.prevent="close"> Cancelar </el-button>
         </div>
       </el-dialog>
     </div>
@@ -95,7 +126,4 @@
 </template>
 
 <script src="@/views/pagosRecibidos/scripts/agregarPagosRecibidos.js"></script>
-<style
-  src="@/views/pagosRecibidos/styles/agregarPagosRecibidos.css"
-  scoped
-></style>
+<style src="@/views/pagosRecibidos/styles/agregarPagosRecibidos.css" scoped ></style>

@@ -73,6 +73,9 @@ export default {
   },
   methods: {
     ...mapActions('pagosRecibidos', ['getTodosPagosRecibidos', 'deleteUnPagoRecibido']),
+    agregarPagoRecibido() {
+      this.$router.push(`/pagosRecibidos/agregar`)
+    },
     async eliminarPagoRecibido(valorEliminar) {
       const { cliente } = valorEliminar
       await this.deleteUnPagoRecibido(valorEliminar.referencia)

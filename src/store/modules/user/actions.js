@@ -2,20 +2,37 @@ import { loginUser, logoutUser, getInfoUser } from '@/api/user'
 import { setToken, removeToken } from '@/utils/auth'
 import router, { resetRouter } from '@/router'
 
-export function login({ commit }, userInfo) {
+// eslint-disable-next-line
+import { lastValueFrom } from 'rxjs'
+import { PREFIX_USUARIO } from '@/utils/constantes'
+import { metodoParaConsultar } from '@/shared'
+
+export async function login({ commit }, userInfo) {
   const { username, password } = userInfo
-  return new Promise((resolve, reject) => {
-    loginUser({ username: username.trim(), password: password })
-      .then((response) => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
-        resolve()
-      })
-      .catch((error) => {
-        reject(error)
-      })
-  })
+  const responseObservavleToPromise$ = await lastValueFrom(
+    metodoParaConsultar(
+      `${process.env.VUE_APP_URL}/${PREFIX_USUARIO}/usuario/${username}/${password}`,
+      `GET`,
+      { 'Content-Type': 'application/json' }
+    )
+  )
+  const { response } = responseObservavleToPromise$
+  commit('SET_TOKEN', response.token)
+  setToken(response.token)
+
+  // return new Promise((resolve, reject) => {
+  //   loginUser({ username: username.trim(), password: password })
+  //     .then((response) => {
+  //       const { data } = response
+  //       // console.log(response)
+  //       commit('SET_TOKEN', data.token)
+  //       setToken(data.token)
+  //       resolve()
+  //     })
+  //     .catch((error) => {
+  //       reject(error)
+  //     })
+  // })
 }
 
 // get user info
@@ -36,6 +53,7 @@ export function getInfo({ commit, state }) {
           reject('getInfo: roles must be a non-null array!')
         }
 
+        console.log({roles, name, avatar, introduction})
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)
