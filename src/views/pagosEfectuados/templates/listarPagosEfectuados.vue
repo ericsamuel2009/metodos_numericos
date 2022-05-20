@@ -1,52 +1,38 @@
 <template>
   <div id="pagosEfectuados">
     <div class="app-container">
-      <el-descriptions
-        class="margin-top"
-        title="With border"
-        :column="3"
-        border
+      <tabla-dinamica
+        :datos="tableData"
+        :tablacabecera="aTablaCabecera"
+        :list-loading="listLoading"
+        summary
       >
-        <template slot="extra">
-          <el-button type="primary" size="small">Operation</el-button>
+        <template #categoria="{ row }">
+          {{ row.conceptos.categorias.titulo }}
         </template>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-user" />
-            Username
-          </template>
-          kooriookami
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-mobile-phone" />
-            Telephone
-          </template>
-          18100000000
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-location-outline" />
-            Place
-          </template>
-          Suzhou
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-tickets" />
-            Remarks
-          </template>
-          <el-tag size="small">School</el-tag>
-        </el-descriptions-item>
-        <el-descriptions-item>
-          <template slot="label">
-            <i class="el-icon-office-building" />
-            Address
-          </template>
-          No.1188, Wuzhong Avenue, Wuzhong District, Suzhou, Jiangsu Province
-        </el-descriptions-item>
-      </el-descriptions>
+        <template #conceptos="{ row }">
+          {{ row.conceptos.titulo }}
+        </template>
+        <template #monto="{ row }">
+          {{ row.monto | toCurrency }}
+        </template>
+        <template #estadopago="{ row }">
+          {{ row.estadopago }}
+        </template>
+        <template #fechapago="{ row }">
+          {{ row.fechapago | moment('YYYY-MM-DD') }}
+        </template>
+        <template #comentario="{ row }">
+          {{ row.comentario | limiteCaracteresFiltro }}
+        </template>
+      </tabla-dinamica>
     </div>
+    <pagination
+      :total="nTotalPaginas"
+      :page.sync="listQuery.page"
+      :limit.sync="listQuery.limit"
+      @pagination="consultarPagoEfectuado"
+    />
   </div>
 </template>
 

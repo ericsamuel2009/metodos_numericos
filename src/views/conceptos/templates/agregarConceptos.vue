@@ -12,10 +12,16 @@
             </el-select>
           </el-form-item>
           <el-form-item label="Estado" prop="estado">
-            <el-select v-model="sizeForm.estado" placeholder="Seleccione una Opcion">
+            <el-switch
+              v-model="sizeForm.estado"
+              active-color="#13ce66"
+              active-value="1"
+              inactive-value="0"
+            />
+            <!-- <el-select v-model="sizeForm.estado" placeholder="Seleccione una Opcion">
               <el-option label="Activo" value="1" />
               <el-option label="Inactivo" value="0" />
-            </el-select>
+            </el-select> -->
           </el-form-item>
 
           <el-form-item size="mini">
@@ -39,6 +45,13 @@ export default {
     rules: Object.assign({}, rules),
     aCategorias: []
   }),
+  computed: {
+    ...mapGetters('categorias', ['gCategoriasList']),
+    ...mapGetters('conceptos', ['gSaveConcepto'])
+  },
+  created() {
+    this.consultarCategorias()
+  },
   methods: {
     ...mapActions('categorias', ['getCategorias', 'saveConcepto']),
     ...mapActions('conceptos', ['saveConcepto']),
@@ -64,13 +77,6 @@ export default {
       if (validarStatus(status)) return false
       this.aCategorias = response?.content
     }
-  },
-  computed: {
-    ...mapGetters('categorias', ['gCategoriasList']),
-    ...mapGetters('conceptos', ['gSaveConcepto'])
-  },
-  created() {
-    this.consultarCategorias()
   }
 }
 

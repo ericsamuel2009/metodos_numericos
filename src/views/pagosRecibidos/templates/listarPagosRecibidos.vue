@@ -55,7 +55,7 @@
             icon="el-icon-info"
             icon-color="red"
             title="Seguro De Eliminarlo?"
-            @onConfirm="eliminarPagoRecibido(row)"
+            @confirm="eliminarPagoRecibido(row)"
           >
             <slot name="delete">
               <el-button slot="reference" type="text" size="mini">Eliminar</el-button>

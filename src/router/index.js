@@ -57,6 +57,16 @@ export const constantRoutes = [
         component: () => import('@/views/redirect/index')
       }
     ]
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404'),
+    hidden: true
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401'),
+    hidden: true
   }
 ]
 
@@ -72,9 +82,9 @@ export const asyncRoutes = [
     children: [
       {
         path: 'list',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/informes/templates/index'),
         name: 'Informes',
-        meta: { title: 'Listar Informes', icon: 'mdi-chart-arc' }
+        meta: { title: 'Reporte de Informe', icon: 'mdi-chart-arc' }
       }
     ]
   },

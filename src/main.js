@@ -11,11 +11,9 @@ import router from './router'
 import './icons'
 import './permission'
 import './utils/error-log'
-import * as filters from './filters' // global filters
+import * as filters from './filters'
 import VueRx from 'vue-rx'
-import 'tui-calendar/dist/tui-calendar.css'
-import 'tui-date-picker/dist/tui-date-picker.css'
-import 'tui-time-picker/dist/tui-time-picker.css'
+
 const moment = require('moment')
 require('moment/locale/es')
 import VCalendar from 'v-calendar'

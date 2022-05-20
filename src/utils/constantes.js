@@ -24,12 +24,13 @@ export const INFORMACION_MENSAJE_NOTIFICACION = {
   TITULO_BAD_REQUEST: 'Error 404 Bad Request',
   DESCRIPCION_BAD_REQUEST_400: 'Ocurrio un Error de peticion Comunicate con el administrador... ✋',
   TITULO_CONEXION_LOST: 'Caida De Servidor',
-  DESCRIPCION_CONEXION_LOST: 'Ocurrio un Error de conexion Porfavor Contacta al Administrador 👹',
+  DESCRIPCION_CONEXION_LOST: 'Ocurrio un Error de conexion Porfavor Contacta al Administrador 😡',
   TITULO_DEFAULT: 'Mensaje Por Defecto',
   DESCRIPCION_DEFAULT: 'Debes Agregar alguna descripcion... 🤯'
 }
 export const INTENTO_CONEXION = 5
 export const PREFIX_PAGOS_RECIBIDOS = 'pagosrecibidos'
+export const PREFIX_PAGOS_EFECTUADOS = 'pagosefectuados'
 export const PREFIX_CATEGORIAS = 'categorias'
 export const PREFIX_CONCEPTO = 'concepto'
 export const PREFIX_USUARIO = 'usuarios'

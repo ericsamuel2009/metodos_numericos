@@ -17,7 +17,7 @@
               icon="el-icon-info"
               icon-color="red"
               :title="`Facturar ${registreCount} Registros?`"
-              @onConfirm="facturar"
+              @confirm="facturar"
             >
               <slot name="delete">
                 <el-button

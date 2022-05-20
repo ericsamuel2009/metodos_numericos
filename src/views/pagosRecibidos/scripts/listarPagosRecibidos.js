@@ -78,7 +78,9 @@ export default {
     },
     async eliminarPagoRecibido(valorEliminar) {
       const { cliente } = valorEliminar
-      await this.deleteUnPagoRecibido(valorEliminar.referencia)
+      await this.deleteUnPagoRecibido(valorEliminar?.referencia)
+      const { status } = this.sDeletePagosRecibidos
+      if (validarStatus(status)) return false
       this.notification('Ok', `El Cliente ${cliente} fue Eliminado`, 'success')
       this.consultarPagosRecibidos()
       console.log(this.sDeletePagosRecibidos)
