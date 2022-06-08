@@ -26,7 +26,7 @@
                   type="info"
                   size="mini"
                   plain
-                >facturar pagos recibidos</el-button>
+                >Facturar pagos Recibidos</el-button>
               </slot>
             </el-popconfirm>
           </el-col>

@@ -120,7 +120,7 @@ function oFormModels() {
     cliente: '',
     motivo: '',
     monto: '',
-    fechapago: '',
+    fechapago: new Date(),
     comentario: ''
   }
 }

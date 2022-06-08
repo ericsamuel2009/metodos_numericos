@@ -27,7 +27,7 @@
         :list-loading="listLoading"
       >
         <template #estado="{ row }">
-          <el-tag :type="colorStatusHandler(row)" effect="dark">
+          <el-tag :type="colorStatusHandler(row.estado)" effect="dark">
             {{ row.estado | statusHandler }}
           </el-tag>
         </template>

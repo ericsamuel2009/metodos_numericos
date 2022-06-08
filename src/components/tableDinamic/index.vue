@@ -10,7 +10,7 @@
         :width="main.width"
         :fixed="main.fixed"
         :sortable="main.sortable"
-        empty-text="No"
+        empty-text="Sin Datos"
       >
         <template slot-scope="{ row }">
           <slot :name="main.valor" :row="row">
@@ -27,6 +27,7 @@
 
 <script>
 import BackToTop from '@/components/BackToTop'
+import { number } from 'echarts/lib/export'
 export default {
   name: 'TableDinamic',
   components: { BackToTop },
@@ -72,11 +73,14 @@ export default {
     summary: {
       type: [Boolean],
       default: false
+    },
+    height: {
+      type: [String, number],
+      default: ''
     }
   },
   data: () => ({
     visible: false,
-    // customizable button style, show/hide critical point, return position
     myBackToTopStyle: {
       right: '50px',
       bottom: '50px',
@@ -94,12 +98,6 @@ export default {
       }
       return '100'
     }
-    // datosComputados() {
-    //   this.datos.map(informationResponse => {
-    //     informationResponse.tablacabecera = this.tablacabecera
-    //   })
-    //   return this.datos
-    // }
   },
   methods: {
     eliminar(valor) {
@@ -127,7 +125,7 @@ export default {
           return
         }
         const values = data.map(item => Number(item[column.property]))
-        if (!values.every(value => isNaN(value) || !value) && (values > 1000)) {
+        if (!values.every(value => isNaN(value) || !value) && values.every(value => value > 1000) && values.every(value => value < 10000 * 100)) {
           sums[index] = this.toCurrency(values.reduce((prev, curr) => {
             const value = Number(curr)
             if (!isNaN(value)) {

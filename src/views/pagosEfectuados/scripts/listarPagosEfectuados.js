@@ -4,24 +4,36 @@ import { validarStatus } from '@/validators/shared.validator'
 import dataMixins from '@/mixins/dataMixins'
 import methodsMixins from '@/mixins/methodsMixins'
 import Pagination from '@/components/Pagination'
+import FilterDinamic from '@/components/filterDinamic'
 const CABECERA_PAGOS_EFECTUADOS = aCabeceraPagosEfectuados()
 export default {
   name: 'ListarPagosRecibidos',
-  components: { Pagination, TablaDinamica },
+  components: { Pagination, TablaDinamica, FilterDinamic },
   data: () => ({
     tableData: [],
     listLoading: false,
     nTotalPaginas: 0,
-    aTablaCabecera: Object.assign({}, CABECERA_PAGOS_EFECTUADOS)
+    aConceptos: [],
+    concepto: '',
+    aTablaCabecera: CABECERA_PAGOS_EFECTUADOS
   }),
   mixins: [dataMixins, methodsMixins],
   computed: {
-    ...mapGetters('pagosEfectuados', ['gListPagosEfectuados'])
+    ...mapGetters('pagosEfectuados', ['gListPagosEfectuados']),
+    ...mapGetters('conceptos', ['gConceptos'])
   },
   created() {
-    this.consultarPagoEfectuado()
+    this.consultarPagoEfectuado(Object.assign({}, null))
   },
   filters: {
+    convertEstadoPago(estado) {
+      const ESTADO_PAGO = {
+        '0': 'NO PAGADO',
+        '1': 'PAGADO',
+        '2': 'ABONANDO'
+      }
+      return ESTADO_PAGO[estado] || estado
+    },
     limiteCaracteresFiltro(valorProveedor) {
       if (!valorProveedor) return
       return valorProveedor.length <= 150
@@ -37,17 +49,42 @@ export default {
         minimumFractionDigits: 0
       })
       return formatter.format(currency)
+    },
+    statusHandler(status) {
+      const ESTADO_CATEGORIA = {
+        0: 'Inactivo',
+        1: 'Activo'
+      }
+      return ESTADO_CATEGORIA[status] || status
     }
   },
   methods: {
     ...mapActions('pagosEfectuados', ['getListPagosEfectuados']),
-    async consultarPagoEfectuado() {
+    ...mapActions('conceptos', ['getListConceptos']),
+    eliminarPagoEfectuados() {
+
+    },
+    fechaInicial(fechaInicial) {
+      return fechaInicial && this.$moment(fechaInicial[0]).format('YYYY-MM-DD')
+    },
+    fechaFinal(fechaFinal) {
+      return fechaFinal && this.$moment(fechaFinal[1]).format('YYYY-MM-DD')
+    },
+    async consultarPagoEfectuado(form) {
+      form.concepto = this.concepto
+      console.log({ form })
       this.listLoading = true
       const { page, limit } = this.listQuery
-      // const { referencia, cliente, monto, fechapago } = this.sizeForm
+      const { referencia, concepto, monto, fechapago } = form
       const pageNumber = page - 1
       await this.getListPagosEfectuados({
-        filter: { },
+        filter: {
+          referencia,
+          concepto,
+          monto,
+          fechapagoinicial: fechapago && this.$moment(fechapago[0]).startOf('month').format('YYYY-MM-DD'),
+          fechapagofinal: fechapago && this.$moment(fechapago[1]).endOf('month').format('YYYY-MM-DD')
+        },
         pageNumber,
         pageSize: limit
       })
@@ -56,7 +93,18 @@ export default {
       if (validarStatus(status)) return false
       this.tableData = response?.content
       this.nTotalPaginas = response?.totalElements
+      await this.getListConceptos({
+        filter: { },
+        pageNumber: 0,
+        pageSize: 50
+      })
+      const { response: responseConcepto, status: statusPeticion } = this.gConceptos
+      validarStatus(statusPeticion)
+      this.aConceptos = responseConcepto?.content
       console.log(this.gListPagosEfectuados)
+    },
+    agregarPagoEfectuado() {
+      this.$router.push(`/pagosEfectuados/agregar`)
     }
   }
 }
@@ -68,7 +116,9 @@ function aCabeceraPagosEfectuados() {
       align: 'center',
       width: '120',
       sortable: true,
-      fixed: 'left'
+      isSearch: true,
+      fixed: 'left',
+      type: 'text'
     },
     {
       titulo: 'Categoria',
@@ -82,6 +132,8 @@ function aCabeceraPagosEfectuados() {
       valor: 'conceptos',
       align: 'center',
       width: '150',
+      isSearch: true,
+      type: 'select',
       sortable: true
     },
     {
@@ -89,6 +141,7 @@ function aCabeceraPagosEfectuados() {
       valor: 'monto',
       align: 'center',
       width: '150',
+      isSearch: true,
       sortable: true
     },
     {
@@ -106,15 +159,23 @@ function aCabeceraPagosEfectuados() {
       sortable: true
     },
     {
-      titulo: 'Mes Pago',
+      titulo: 'Fecha de Pago',
       valor: 'fechapago',
       align: 'center',
       width: '170',
+      isSearch: true,
+      type: 'monthrange',
       sortable: true
     },
     {
       titulo: 'Comentario',
       valor: 'comentario'
+    },
+    {
+      titulo: 'Accion',
+      valor: 'accion',
+      align: 'center',
+      width: '150'
     }
   ]
 }

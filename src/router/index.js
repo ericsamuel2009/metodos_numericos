@@ -88,6 +88,19 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/calendario',
+    component: Layout,
+    redirect: '/calendario',
+    children: [
+      {
+        path: 'list',
+        component: () => import('@/views/calendario/templates/index'),
+        name: 'calendario',
+        meta: { title: 'Calendario', icon: 'mdi-calendar-blank-multiple' }
+      }
+    ]
+  },
   { path: '*', redirect: '/404', hidden: true }
 ]
 

@@ -11,12 +11,12 @@ export default {
     notification(title = 'Default', message = 'falta una descripcion del mensaje', type = null) {
       this.$notify({ title, message, type })
     },
-    colorStatusHandler(row) {
+    colorStatusHandler(estado) {
       const ESTADO_CATEGORIA = {
         0: 'danger',
         1: 'success'
       }
-      return ESTADO_CATEGORIA[row.estado] || row.estado
+      return ESTADO_CATEGORIA[estado] || estado
     }
   }
 }

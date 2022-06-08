@@ -14,3 +14,18 @@ export async function getListPagosEfectuados({ commit }, queryFilter) {
   )
   commit('setListPagosEfectuados', responseObservavleToPromise$)
 }
+
+export async function savePagosEfectuados({ commit }, informacion) {
+  const responseObservavleToPromise$ = await lastValueFrom(
+    metodoParaConsultar(
+      `${process.env.VUE_APP_URL}/${PREFIX_PAGOS_EFECTUADOS}/save`,
+      `POST`,
+      {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      informacion
+    )
+  )
+  commit('setSavePagosEfectuados', responseObservavleToPromise$)
+}
