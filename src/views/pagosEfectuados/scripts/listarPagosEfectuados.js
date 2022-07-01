@@ -34,11 +34,11 @@ export default {
       }
       return ESTADO_PAGO[estado] || estado
     },
-    limiteCaracteresFiltro(valorProveedor) {
-      if (!valorProveedor) return
-      return valorProveedor.length <= 150
-        ? valorProveedor
-        : valorProveedor.substr(0, 150) + '...'
+    limiteCaracteresFiltro(valor) {
+      if (!valor) return
+      return valor.length <= 150
+        ? valor
+        : valor.substr(0, 150) + '...'
     },
     toCurrency(valorACurrency) {
       const currency = parseInt(valorACurrency)
@@ -65,10 +65,10 @@ export default {
 
     },
     fechaInicial(fechaInicial) {
-      return fechaInicial && this.$moment(fechaInicial[0]).format('YYYY-MM-DD')
+      return fechaInicial && this.$moment(fechaInicial[0]).format('YYYY-MM-DD  00:00:00')
     },
     fechaFinal(fechaFinal) {
-      return fechaFinal && this.$moment(fechaFinal[1]).format('YYYY-MM-DD')
+      return fechaFinal && this.$moment(fechaFinal[1]).format('YYYY-MM-DD  00:00:00')
     },
     async consultarPagoEfectuado(form) {
       form.concepto = this.concepto
@@ -82,8 +82,8 @@ export default {
           referencia,
           concepto,
           monto,
-          fechapagoinicial: fechapago && this.$moment(fechapago[0]).startOf('month').format('YYYY-MM-DD'),
-          fechapagofinal: fechapago && this.$moment(fechapago[1]).endOf('month').format('YYYY-MM-DD')
+          fechapagoinicial: fechapago && this.$moment(fechapago[0]).startOf('month').format('YYYY-MM-DD  00:00:00'),
+          fechapagofinal: fechapago && this.$moment(fechapago[1]).endOf('month').format('YYYY-MM-DD  00:00:00')
         },
         pageNumber,
         pageSize: limit

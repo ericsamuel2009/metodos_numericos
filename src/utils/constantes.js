@@ -7,8 +7,8 @@ export const VALIDAR_ESTATUS = {
   STATUS_400: /(4[0-9])\w+/g,
   STATUS_500: /(5[0-9])\w+/g
 }
-export const METODO_PAGO_EFECTIVO = 'EFECTIVO'
-export const METODO_PAGO_CUENTA = 'CUENTA'
+export const METODO_PAGO_EFECTIVO = 'CASH'
+export const METODO_PAGO_CUENTA = 'CARD'
 export const VALOR_NEUTRAL = 0
 export const LIMITE_CARACTERES_COMENTARIOS = 40
 export const INFORMACION_MENSAJE_NOTIFICACION = {

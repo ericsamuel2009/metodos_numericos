@@ -11,9 +11,9 @@ export default {
 </script>
 <style lang="scss">
   @import url("./assets/icon/MaterialDesign/css/materialdesignicons.css");
-html{
-  font-family:  "Lexend_Exa",sans-serif;
-    color: #2c3e50!important;
+*{
+  // font-family:  "Lexend_Exa"!important;
+    // color: #2c3e50!important;
 }
 @font-face {
   font-family: "Quicksand";

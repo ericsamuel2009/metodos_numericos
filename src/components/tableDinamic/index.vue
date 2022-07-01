@@ -125,7 +125,10 @@ export default {
           return
         }
         const values = data.map(item => Number(item[column.property]))
-        if (!values.every(value => isNaN(value) || !value) && values.every(value => value > 1000) && values.every(value => value < 10000 * 100)) {
+        if (!values.every(value => isNaN(value) || !value) &&
+            values.every(value => value > 1000) &&
+            values.every(value => value < 10000 * 1000)
+        ) {
           sums[index] = this.toCurrency(values.reduce((prev, curr) => {
             const value = Number(curr)
             if (!isNaN(value)) {

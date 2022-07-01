@@ -54,6 +54,9 @@
         <template #estadopago="{row}">
           {{ row.estadopago | converEstadoPago }}
         </template>
+        <template #monto="{row}">
+          {{row.monto | toCurrency}}
+        </template>
       </tabla-dinamica>
       <el-dialog
         title="Agregar"
@@ -157,7 +160,7 @@ import Pagination from '@/components/Pagination'
 import dataMixins from '@/mixins/dataMixins'
 import methodsMixins from '@/mixins/methodsMixins'
 import { validarStatus } from '@/validators/shared.validator'
-import DatosPagiosEfectuados from "@/models/PagosEfectuadosModel" 
+// import DatosPagiosEfectuados from "@/models/PagosEfectuadosModel"
 const formModels = oFormModels()
 const aTablaCabecera = pagosRecibidosCabecera()
 const rules = oReglas()
@@ -179,7 +182,17 @@ export default {
         '2': 'ABONANDO'
       }
       return ESTADO_PAGO[estado] || estado
-    }
+    },
+    toCurrency(valorACurrency) {
+      const currency = parseInt(valorACurrency)
+      if ([NaN, undefined, null, ''].includes(currency)) return '$ ' + 0
+      var formatter = new Intl.NumberFormat('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        minimumFractionDigits: 0
+      })
+      return formatter.format(currency)
+    },
   },
   mixins: [dataMixins, methodsMixins],
   data() {
@@ -269,6 +282,10 @@ export default {
       await this.savePagosEfectuados(this.tableData)
       this.tableData = []
       this.notification('Ok', `Se Facturo El Pago Recibido`, 'success')
+    },
+    eliminar(valorSeleccionado) {
+      this.tableData.splice(this.tableData.indexOf(valorSeleccionado), 1)
+      this.tableData = [...this.tableData]
     },
     onSubmit(data) {
       this.$refs['dataToAdd'].validate((valid) => {
@@ -419,12 +436,12 @@ function oReglas() {
 //   }
 // }
 
-var validateValorMonto = (rule, value, callback) => {
-  if (Number.isInteger(value) < 50) {
-    callback(new Error(`El valor del Monto debe ser Mayor a  $ ${value} Pesos`))
-  }
-  callback()
-}
+// var validateValorMonto = (rule, value, callback) => {
+//   if (Number.isInteger(value) < 50) {
+//     callback(new Error(`El valor del Monto debe ser Mayor a  $ ${value} Pesos`))
+//   }
+//   callback()
+// }
 </script>
 
 <style>

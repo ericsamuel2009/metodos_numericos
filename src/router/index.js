@@ -84,7 +84,7 @@ export const asyncRoutes = [
         path: 'list',
         component: () => import('@/views/informes/templates/index'),
         name: 'Informes',
-        meta: { title: 'Reporte de Informe', icon: 'mdi-chart-arc' }
+        meta: { title: 'Informes', icon: 'mdi-chart-arc' }
       }
     ]
   },

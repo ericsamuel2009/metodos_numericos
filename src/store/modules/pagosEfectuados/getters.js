@@ -5,3 +5,7 @@ export function gListPagosEfectuados(state) {
 export function gResponseSavePagosEfectuados(state) {
   return state.oPagosEfectuadosResponse
 }
+
+export function gEfectuarPago(state) {
+  return state.efectuarPagpResponse
+}

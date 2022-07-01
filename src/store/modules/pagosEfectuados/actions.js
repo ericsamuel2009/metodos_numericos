@@ -29,3 +29,18 @@ export async function savePagosEfectuados({ commit }, informacion) {
   )
   commit('setSavePagosEfectuados', responseObservavleToPromise$)
 }
+
+export async function getEfectuarPago({ commit }, datosFacturar) {
+  const responseObservavleToPromise$ = await lastValueFrom(
+    metodoParaConsultar(
+      `${process.env.VUE_APP_URL}/${PREFIX_PAGOS_EFECTUADOS}/pago/${datosFacturar?.referencia}`,
+      `PUT`,
+      {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*'
+      },
+      datosFacturar
+    )
+  )
+  commit('setEfectuarPago', responseObservavleToPromise$)
+}
