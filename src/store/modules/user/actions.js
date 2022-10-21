@@ -4,35 +4,35 @@ import router, { resetRouter } from '@/router'
 
 // eslint-disable-next-line
 import { lastValueFrom } from 'rxjs'
-import { PREFIX_USUARIO } from '@/utils/constantes'
-import { metodoParaConsultar } from '@/shared'
+// import { PREFIX_USUARIO } from '@/utils/constantes'
+// import { metodoParaConsultar } from '@/shared'
 
 export async function login({ commit }, userInfo) {
   const { username, password } = userInfo
-  const responseObservavleToPromise$ = await lastValueFrom(
-    metodoParaConsultar(
-      `${process.env.VUE_APP_URL}/${PREFIX_USUARIO}/usuario/${username}/${password}`,
-      `GET`,
-      { 'Content-Type': 'application/json' }
-    )
-  )
-  const { response } = responseObservavleToPromise$
-  commit('SET_TOKEN', response.token)
-  setToken(response.token)
+  // const responseObservavleToPromise$ = await lastValueFrom(
+  //   metodoParaConsultar(
+  //     `${process.env.VUE_APP_URL}/${PREFIX_USUARIO}/usuario/${username}/${password}`,
+  //     `GET`,
+  //     { 'Content-Type': 'application/json' }
+  //   )
+  // )
+  // const { response } = responseObservavleToPromise$
+  // commit('SET_TOKEN', response.token)
+  // setToken(response.token)
 
-  // return new Promise((resolve, reject) => {
-  //   loginUser({ username: username.trim(), password: password })
-  //     .then((response) => {
-  //       const { data } = response
-  //       // console.log(response)
-  //       commit('SET_TOKEN', data.token)
-  //       setToken(data.token)
-  //       resolve()
-  //     })
-  //     .catch((error) => {
-  //       reject(error)
-  //     })
-  // })
+  return new Promise((resolve, reject) => {
+    loginUser({ username: username.trim(), password: password })
+      .then((response) => {
+        const { data } = response
+        // console.log(response)
+        commit('SET_TOKEN', data.token)
+        setToken(data.token)
+        resolve()
+      })
+      .catch((error) => {
+        reject(error)
+      })
+  })
 }
 
 // get user info
@@ -53,7 +53,7 @@ export function getInfo({ commit, state }) {
           reject('getInfo: roles must be a non-null array!')
         }
 
-        console.log({roles, name, avatar, introduction})
+        console.log({ roles, name, avatar, introduction })
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

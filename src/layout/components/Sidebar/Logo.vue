@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      title: 'Cuentas',
+      title: 'Metodos numericos',
       logo: 'https://es.seaicons.com/wp-content/uploads/2016/05/Letter-C-icon-1.png'
     }
   }

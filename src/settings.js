@@ -1,5 +1,5 @@
 module.exports = {
-  title: 'Cuentas',
+  title: 'Metodos numericos',
 
   /**
    * @type {boolean} true | false

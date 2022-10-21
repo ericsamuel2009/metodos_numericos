@@ -1,7 +1,7 @@
 <template>
   <div id="calendario">
     <div class="app-container">
-      <div class="app-container">
+      <div class="">
         <el-select v-model="selectedView" placeholder="Select">
           <el-option
             v-for="(options, index) in viewModeOptions"

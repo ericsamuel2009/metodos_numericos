@@ -5,10 +5,11 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 
-import PagosRecibidos from './modules/pagosRecibidos'
-import PagosEfectuados from './modules/pagosEfectuados'
-import Recursos from './modules/recursos'
+// import PagosRecibidos from './modules/pagosRecibidos'
+// import PagosEfectuados from './modules/pagosEfectuados'
+// import Recursos from './modules/recursos'
 // import tableRouter from './modules/table'
+import integralesDefinidas from './modules/integralesDefinidas'
 export const constantRoutes = [
   {
     path: '/',
@@ -71,23 +72,24 @@ export const constantRoutes = [
 ]
 
 export const asyncRoutes = [
+  integralesDefinidas,
   // tableRouter,
-  PagosRecibidos,
-  PagosEfectuados,
-  Recursos,
-  {
-    path: '/informes',
-    component: Layout,
-    redirect: '/Informes',
-    children: [
-      {
-        path: 'list',
-        component: () => import('@/views/informes/templates/index'),
-        name: 'Informes',
-        meta: { title: 'Informes', icon: 'mdi-chart-arc' }
-      }
-    ]
-  },
+  // PagosRecibidos,
+  // PagosEfectuados,
+  // Recursos,
+  // {
+  //   path: '/informes',
+  //   component: Layout,
+  //   redirect: '/Informes',
+  //   children: [
+  //     {
+  //       path: 'list',
+  //       component: () => import('@/views/informes/templates/index'),
+  //       name: 'Informes',
+  //       meta: { title: 'Informes', icon: 'mdi-chart-arc' }
+  //     }
+  //   ]
+  // },
   {
     path: '/calendario',
     component: Layout,

@@ -6,7 +6,7 @@ function resolve(dir) {
   return path.join(__dirname, dir)
 }
 
-const name = defaultSettings.title || 'Cuentas'
+const name = defaultSettings.title || 'Metodos Numericos'
 const port = process.env.port || process.env.npm_config_port || 8080
 module.exports = {
   publicPath: '/',
