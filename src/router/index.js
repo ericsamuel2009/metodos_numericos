@@ -5,10 +5,6 @@ Vue.use(Router)
 
 import Layout from '@/layout'
 
-// import PagosRecibidos from './modules/pagosRecibidos'
-// import PagosEfectuados from './modules/pagosEfectuados'
-// import Recursos from './modules/recursos'
-// import tableRouter from './modules/table'
 import integralesDefinidas from './modules/integralesDefinidas'
 export const constantRoutes = [
   {
