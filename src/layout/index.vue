@@ -30,18 +30,8 @@ export default {
   },
   mixins: [ResizeMixin],
   computed: {
-    // ...mapState({
-    //   sidebar: state => state.app.sidebar,
-    //   device: state => state.app.device,
-    //   showSettings: state => state.settings.showSettings,
-    //   needTagsView: state => state.settings.tagsView,
-    //   fixedHeader: state => state.settings.fixedHeader
-    // }),
     ...mapState('app', ['sidebar', 'device']),
     ...mapState('settings', ['showSettings', 'tagsView', 'fixedHeader']),
-    created() {
-        console.log("as;ldm");
-    },
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,
