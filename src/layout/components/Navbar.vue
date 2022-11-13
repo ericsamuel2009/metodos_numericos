@@ -18,13 +18,13 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
-          <router-link to="/profile/index">
+          <!-- <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
           </router-link>
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
-          </router-link>
-          <el-dropdown-item divided @click.native="logout">
+          </router-link> divided-->
+          <el-dropdown-item @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
         </el-dropdown-menu>
@@ -39,7 +39,7 @@ import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 // import ErrorLog from '@/components/ErrorLog'
 import Screenfull from '@/components/Screenfull'
-import SizeSelect from '@/components/SizeSelect'
+// import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
 
 export default {
@@ -48,7 +48,7 @@ export default {
     Hamburger,
     // ErrorLog,
     Screenfull,
-    SizeSelect,
+    // SizeSelect,
     Search
   },
   computed: {

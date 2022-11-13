@@ -12,34 +12,34 @@ const componentsRouter = {
   },
   children: [
     {
-      path: 'trapezoidal',
-      component: () => import('@/views/integralesDefinidas/trapezoidal'),
-      name: 'trapezoidal',
-      meta: { title: 'metodo trapezoidal' }
-    },
-    {
-      path: 'jorgeBoole',
-      component: () => import('@/views/integralesDefinidas/jorgeBoole'),
-      name: 'jorgeBoole',
-      meta: { title: 'metodo jorgeBoole' }
-    },
-    {
-      path: 'simpsonAbierto',
-      component: () => import('@/views/integralesDefinidas/simpsonAbierto'),
-      name: 'simpson Abierto',
-      meta: { title: 'metodo simpson Abierto' }
-    },
-    {
       path: 'tSimpson13',
       component: () => import('@/views/integralesDefinidas/tSimpson13'),
-      name: 't. Simpson 1/3',
-      meta: { title: 'metodo Simpson 1/3', icon: 'mdi-chart-bell-curve' }
+      name: 'TSimpson13',
+      meta: { title: 'metodo Simpson 1/3', icon: 'mdi-chart-bell-curve', titleDashboard: 'Simpson 1/3', color: 'icon-light-blue' }
     },
     {
       path: 'tSimpson38',
       component: () => import('@/views/integralesDefinidas/tSimpson38'),
-      name: 't. Simpson 3/8',
-      meta: { title: 'metodo t. Simpson 3/8' }
+      name: 'TSimpson38',
+      meta: { title: 'metodo Simpson 3/8', icon: 'mdi-chart-sankey', titleDashboard: 'Simpson 3/8', color: 'icon-red' }
+    },
+    {
+      path: 'boole',
+      component: () => import('@/views/integralesDefinidas/jorgeBoole'),
+      name: 'JeorgeBoole',
+      meta: { title: 'metodo Boole', icon: 'mdi-chart-bell-curve-cumulative', titleDashboard: 'Boole', color: 'icon-green' }
+    },
+    {
+      path: 'trapezoidal',
+      component: () => import('@/views/integralesDefinidas/trapezoidal'),
+      name: 'Trapezoidal',
+      meta: { title: 'metodo trapezoidal', icon: 'mdi-chart-line-variant', titleDashboard: 'trapezoidal', color: 'icon-blue' }
+    },
+    {
+      path: 'simpsonAbierto',
+      component: () => import('@/views/integralesDefinidas/simpsonAbierto'),
+      name: 'SimpsonAbierto',
+      meta: { title: 'metodo simpson Abierto', icon: 'mdi-chart-ppf', titleDashboard: 'simpson Abierto', color: 'icon-red' }
     }
   ]
 }
