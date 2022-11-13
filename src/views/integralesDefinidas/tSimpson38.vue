@@ -222,6 +222,11 @@ export default {
       this.loopTabla = []
       let x = this.valorInferior
       const ecua = '(' + this.ecuacion + ')'
+      const esFormulaCalculable = this.reemplazarEcuacion(ecua, x)
+      if (isNaN(math.evaluate(esFormulaCalculable))) {
+        this.messageToast(true, 'La Formula  "' + esFormulaCalculable + ' ", es incalculable', 'error', 'top-left')
+        return false
+      }
       this.rellenarValorInicialaTabla(x, this.reemplazarEcuacion(ecua, x))
       while (x !== this.valorSuperior) {
         if (x > this.valorSuperior) {
@@ -269,7 +274,7 @@ export default {
 <style lang="scss" scoped>
 
 .inputIntegral {
-  width: 16px;
+  width: 20px;
 
   ::v-deep .el-input__inner {
     padding: 0;
