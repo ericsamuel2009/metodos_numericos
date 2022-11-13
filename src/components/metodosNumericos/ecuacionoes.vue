@@ -8,8 +8,8 @@
       <el-button style="font-size: 1.3em;" type="primary" icon="mdi mdi-math-sin" @click="symbol('sin')" />
       <el-button style="font-size: 1.3em;" type="primary" icon="mdi mdi-math-tan" @click="symbol('tan')" />
       <el-button style="font-size: 1.3em;" type="primary" icon="mdi mdi-math-cos" @click="symbol('cos')" />
-      <el-button style="font-size: 1.3em;" type="primary" @click="symbol('(')">(</el-button>
-      <el-button style="font-size: 1.3em;" type="primary" @click="symbol(')')">)</el-button>
+      <!-- <el-button style="font-size: 1.3em;" type="primary" @click="symbol('(')">(</el-button>
+      <el-button style="font-size: 1.3em;" type="primary" @click="symbol(')')">)</el-button> -->
     </el-card>
   </div>
 </template>

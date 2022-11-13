@@ -70,7 +70,6 @@
             </div>
             <div>
               n = <el-input v-model.number="deltaInfo" style="width: 60px;" size="mini" />
-              <!-- <el-input v-model.number="deltaInfo" style="width: 48px;" size="mini" /> -->
             </div>
             <div>
               <i class="mdi mdi-delta" /> =
@@ -79,7 +78,6 @@
                 <span class="bar" />
                 <span>{{ deltaInfo }}</span>
               </div>  = {{ resultadoDelta }}
-              <!-- <el-input v-model.number="deltaInfo" style="width: 48px;" size="mini" /> -->
             </div>
           </el-card>
         </el-col>
@@ -97,20 +95,6 @@
             <div slot="header" class="clearfix">
               <span><b>Las Particiones</b></span>
             </div>
-            <!-- <div>
-              <el-table
-                :data="loopTabla"
-                border
-                height="270"
-                :summary-method="getSummaries"
-                show-summary
-                style="width: 100%; margin-top: 20px"
-              >
-                <el-table-column prop="x" label="X" width="180" />
-                <el-table-column prop="ecuacion" :label="ecuacionTabla" />
-                <el-table-column prop="total" label="Total" />
-              </el-table>
-            </div> -->
             <tablaParticiones is-export :export-file-name="`metodoTrapezoidal`" :data="loopTabla" :ecuacion-tabla="ecuacionTabla" />
             <el-card class="box-card">
               <i class="mdi mdi-sigma" /> = {{ sumatoriaEcuacion }} <i class="mdi mdi-tilde" /> I = {{ resultadoDeLaFormula }}
@@ -156,7 +140,9 @@
           </el-card>
         </el-col>
       </el-row>
-
+      <el-tooltip placement="top" content="subir">
+        <back-to-top :custom-style="myBackToTopStyle" :visibility-height="200" :back-position="1" transition-name="fade" />
+      </el-tooltip>
     </div>
   </div>
 </template>
@@ -166,12 +152,13 @@ import Ecuaciones from '@/components/metodosNumericos/ecuacionoes.vue'
 import tablaParticiones from '@/components/metodosNumericos/tablaParticiones.vue'
 import MostrarNuevaEcuacion from '@/components/metodosNumericos/mostrarNuevaEcuacion.vue'
 import FunctionPlot from '@/views/dashboard/admin/components/FunctionPlot.vue'
+import BackToTop from '@/components/BackToTop'
 import MethodsMixins from '@/mixins/methodsMixins'
 import { create, all } from 'mathjs'
 const math = create(all)
 export default {
   name: 'Trapezoidal',
-  components: { Ecuaciones, tablaParticiones, MostrarNuevaEcuacion, FunctionPlot },
+  components: { Ecuaciones, tablaParticiones, MostrarNuevaEcuacion, FunctionPlot, BackToTop },
   mixins: [MethodsMixins],
   data() {
     return {
@@ -184,12 +171,20 @@ export default {
       loopTabla: [],
       tmp: [],
       lineChartData: { },
-      ecuacionInputElement: null
+      ecuacionInputElement: null,
+      myBackToTopStyle: {
+        right: '50px',
+        bottom: '50px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px',
+        background: '#e7eaf1'
+      }
     }
   },
   computed: {
     resultadoDelta() {
-      // debugger
       const total = (this.valorSuperior - this.valorInferior) / this.deltaInfo
       if (total.toString().split('.')[1] && total.toString().split('.')[1]?.length > 1) {
         return `${this.valorSuperior - this.valorInferior} / ${this.deltaInfo}`
@@ -208,11 +203,6 @@ export default {
       return ((eval(this.resultadoDelta)) * (this.sumatoriaEcuacion)) / 2
     }
   },
-  // watch: {
-  //   deltaInfo() {
-  //     console.log("ddd");
-  //   }
-  // },
   mounted() {
     this.ecuacionInputElement = document.querySelector('#ecuacion')
   },
@@ -232,25 +222,15 @@ export default {
       }
       if (this.valorInferior > this.valorSuperior) {
         this.messageToast(true, 'El valor inicial no puede ser mayor al valor superior', 'error', 'top-left')
-        // this.$notify({
-        //   title: 'Error',
-        //   message: 'El valor inicial no puede ser mayor al valor superior',
-        //   type: 'error',
-        //   position: 'top-left'
-        // })
         return false
       }
-      // debugger
       this.lineChartData = {}
       this.tmp = []
       this.loopTabla = []
       let x = this.valorInferior
       const ecua = '(' + this.ecuacion + ')'
       this.rellenarValorInicialaTabla(x, this.reemplazarEcuacion(ecua, x))
-      // this.rellenarValorInicialaTabla(x, ecua.replace(/[x]+/g, x).replace(nue.val1, nue.val2Replae))
-
       while (x !== this.valorSuperior) {
-        // debugger
         if (x > this.valorSuperior) {
           console.log('no alcanzo el loop ultimo valor:', x, 'valor al que debia alcanzar: ', this.valorSuperior)
           break
@@ -259,26 +239,17 @@ export default {
         const formulaRes = math.format(math.simplify(ecuacion), { fraction: 'ratio' })
         x = math.evaluate(formulaRes)
         const dimencionDecimalX = x.toString().split('.')[1]?.length
-        const newX = this.returnNewFunctionX(dimencionDecimalX, formulaRes) // (dimencionX > 3) ? formulaRes : math.evaluate(formulaRes)
+        const newX = this.returnNewFunctionX(dimencionDecimalX, formulaRes)
         const nuevaEcuacion = this.reemplazarEcuacion(ecua, newX)
         this.tmp.push({ x: newX, ecu: nuevaEcuacion, decimal: dimencionDecimalX })
       }
-      // // // console.log(this.tmp) Math.sqrt(84 / 34 / 34 / 34 / 3-5)
-      // debugger
       const dimencionArray = this.tmp.length
       for (let i = 0; i < dimencionArray; i++) {
         if (i !== 0 && i !== dimencionArray - 1) {
           this.tmp[i].ecu = '2' + '*' + this.tmp[i].ecu
         }
       }
-      // this.tmp[0].ecu = '1*' + this.tmp[0].ecu
-      // this.tmp[dimencionArray - 1].ecu = '1*' + this.tmp[1].ecu
-      // // this.tmp[2].ecu = '12*' + this.tmp[2].ecu
-      // // this.tmp[3].ecu = '32*' + this.tmp[3].ecu
-      // // this.tmp[4].ecu = '7*' + this.tmp[4].ecu
-
       this.loopTabla = this.tmp.map(element => {
-        // debugger
         return {
           x: element.x,
           ecuacion: this.mostrarEcuacion(element.ecu),
@@ -287,42 +258,21 @@ export default {
       })
       this.lineChartData = this.newArrayChart(this.loopTabla)
     },
-    // reemplazarEcuacion(ecuacion, valorReemplazar) {
-    //   return ecuacion.replace(/[xX]+/g, valorReemplazar)// .replace('sqrt', 'Math.sqrt').replace('pow', 'Math.pow').replace('cbrt', 'Math.cbrt').replace('cos', 'Math.cos').replace('exp', 'Math.exp')
-    // },
     mostrarEcuacion(ecuacion) {
       const isMathSqrt = ecuacion.includes('sqrt')
-      // const isMathLog = ecuacion.includes('log10')
-      // const isMathPow = ecuacion.includes('pow')
       if (isMathSqrt) {
         return ecuacion.replace('Math.sqrt', 'sqrt')
       }
-      // if (isMathLog) {
-      //   return ecuacion.replace('log10', 'log')
-      // }
-      // if (isMathPow) {
-      //   return ecuacion.replace('Math.pow', 'pow')
-      // }
       return ecuacion
     },
     rellenarValorInicialaTabla(valInferior, ecu) {
       this.tmp.push({ x: valInferior, ecu: ecu })
-    },
-    mostrar() {
-      return
-    },
-    getSummaries() {
-      return null
-    },
-    calcularEcuacion() {
-      return 0
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
 .inputIntegral {
   width: 16px;
 

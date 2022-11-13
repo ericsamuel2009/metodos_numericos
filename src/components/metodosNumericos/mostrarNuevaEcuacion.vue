@@ -1,17 +1,12 @@
 <template>
   <span>
-    <!-- {{ convertirEcuacion }} -->
     <span class="eq-c">
       <span class="radical">
         <span class="valorSuperior">{{ valorSuperior }}</span>
         <span class="integral">∫</span>
         <span class="valorInferior">{{ valorInferior }}</span>
         <span v-html="convertirEcuacion" /> dx
-        <!-- <span class="radicand">{{convertirRadicado}}</span> -->
-        <!-- {{ convertirEcuacion }} -->
       </span>
-      <span />
-      <!-- <span class="radical"><span class="n-root">3</span>&radic;</span><span class="radicand">81</span> -->
     </span>
   </span>
 </template>
@@ -20,18 +15,22 @@
 export default {
   name: 'MostrarNuevaEcuacion',
   props: {
-    nuevaEcuacion: [String],
-    valorSuperior: [String, Number],
-    valorInferior: [String, Number]
+    nuevaEcuacion: {
+      type: String,
+      default: ''
+    },
+    valorSuperior: {
+      type: [String, Number],
+      default: 0
+    },
+    valorInferior: {
+      type: [String, Number],
+      default: 0
+    }
   },
   computed: {
     convertirEcuacion() {
-      console.log(this.nuevaEcuacion)
       return this.nuevaEcuacion.replaceAll('sqrt', `&radic;`).replaceAll('()', '').replaceAll('log10', 'Log').replaceAll('log', 'Ln')
-    },
-    convertirRadicado() {
-      console.log(this.nuevaEcuacion)
-      return this.nuevaEcuacion.split('sqrt()')
     }
   }
 }

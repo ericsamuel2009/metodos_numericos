@@ -27,13 +27,6 @@
                 round
                 @click="calcular"
               >Calcular</el-button>
-              <!-- <el-button
-                icon="mdi mdi-calculator"
-                circle
-                type="info"
-                @click="dialogTableVisible = true"
-              />
-              <i class="mdi mdi-menu-right" @click="mostrar" /> -->
             </div>
             <div>
               <Ecuaciones @symbolTriggerEvent:add="agregarSimbol" />
@@ -145,7 +138,9 @@
           </el-card>
         </el-col>
       </el-row>
-
+      <el-tooltip placement="top" content="subir">
+        <back-to-top :custom-style="myBackToTopStyle" :visibility-height="200" :back-position="1" transition-name="fade" />
+      </el-tooltip>
     </div>
   </div>
 </template>
@@ -155,12 +150,13 @@ import Ecuaciones from '@/components/metodosNumericos/ecuacionoes.vue'
 import tablaParticiones from '@/components/metodosNumericos/tablaParticiones.vue'
 import MostrarNuevaEcuacion from '@/components/metodosNumericos/mostrarNuevaEcuacion.vue'
 import FunctionPlot from '@/views/dashboard/admin/components/FunctionPlot.vue'
+import BackToTop from '@/components/BackToTop'
 import MethodsMixins from '@/mixins/methodsMixins'
 import { create, all } from 'mathjs'
 const math = create(all)
 export default {
   name: 'TSimpson13',
-  components: { Ecuaciones, tablaParticiones, MostrarNuevaEcuacion, FunctionPlot },
+  components: { Ecuaciones, tablaParticiones, MostrarNuevaEcuacion, FunctionPlot, BackToTop },
   mixins: [MethodsMixins],
   data() {
     return {
@@ -173,8 +169,17 @@ export default {
       loopTabla: [],
       tmp: [],
       grafica: {},
-      lineChartData: { }, // lineChartData.dataXY
-      ecuacionInputElement: null
+      lineChartData: { },
+      ecuacionInputElement: null,
+      myBackToTopStyle: {
+        right: '50px',
+        bottom: '50px',
+        width: '40px',
+        height: '40px',
+        'border-radius': '4px',
+        'line-height': '45px',
+        background: '#e7eaf1'
+      }
     }
   },
   computed: {
@@ -224,27 +229,16 @@ export default {
           console.log('no alcanzo el loop ultimo valor:', x, 'valor al que debia alcanzar: ', this.valorSuperior)
           break
         }
-        // const ec = `${x}+${this.resultadoDelta}`.split('+')
-        // const formandolo = `${ec[0] + ' / 1'} + ${ec[1]}`.split(' ')
-        // const formulaRes = (dimencionX > 3) ? `(${formandolo[0] * formandolo[formandolo.length - 1] + formandolo[2] * formandolo[formandolo.length - 3]} / ${formandolo[2] * formandolo[formandolo.length - 1]})` : `${x}+${this.resultadoDelta}`
-        // x = math.evaluate(formulaRes)
-        // const nuevaEcuacion = this.reemplazarEcuacion(ecua, x)
-        // this.tmp.push({ x: x, ecu: nuevaEcuacion })
         const ecuacion = `${x}+${this.resultadoDelta}`
         const formulaRes = math.format(math.simplify(ecuacion), { fraction: 'ratio' })
         x = math.evaluate(formulaRes)
         const dimencionDecimalX = x.toString().split('.')[1]?.length
-        const newX = this.returnNewFunctionX(dimencionDecimalX, formulaRes) // (dimencionX > 3) ? formulaRes : math.evaluate(formulaRes)
+        const newX = this.returnNewFunctionX(dimencionDecimalX, formulaRes)
         const nuevaEcuacion = this.reemplazarEcuacion(ecua, newX)
         this.tmp.push({ x: newX, ecu: nuevaEcuacion, decimal: dimencionDecimalX })
       }
-      // this.tmp[1].ecu = '4*' + this.tmp[1].ecu
       const v = ['1', '4', '1']
-      // for (let i = 0; i < this.tmp.length; i++) {
-      //   this.tmp[i].ecu = v[i] + '*' + this.tmp[i].ecu
-      // }
       const dimencionArray = this.tmp.length
-      // debugger
       for (let i = 0; i < dimencionArray; i++) {
         if (i !== 0 && i !== dimencionArray - 1) {
           this.tmp[i].ecu = v[i] + '*' + this.tmp[i].ecu
@@ -258,34 +252,16 @@ export default {
         }
       })
       this.lineChartData = this.newArrayChart(this.loopTabla)
-      console.table(this.lineChartData)
-      // this.loopTabla.map(v => {
-      //   const t =
-      //   console.log()
-      // })
     },
     mostrarEcuacion(ecuacion) {
       const isMathSqrt = ecuacion.includes('sqrt')
-      // const isMathPow = ecuacion.includes('pow')
       if (isMathSqrt) {
         return ecuacion.replace('Math.sqrt', 'sqrt')
       }
-      // if (isMathPow) {
-      //   return ecuacion.replace('Math.pow', 'pow')
-      // }
       return ecuacion
     },
     rellenarValorInicialaTabla(valInferior, ecu) {
       this.tmp.push({ x: valInferior, ecu: ecu })
-    },
-    mostrar() {
-      return
-    },
-    getSummaries() {
-      return null
-    },
-    calcularEcuacion() {
-      return 0
     }
   }
 }

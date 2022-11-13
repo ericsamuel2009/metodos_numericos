@@ -14,8 +14,6 @@
         height="370"
         style="width: 100%; margin-top: 20px"
       >
-        <!-- <el-table-column prop="x" label="X" width="180" /> -->
-        <!-- <el-table-column prop="ecuacion" :label="nuevaEcuacionTabla" /> -->
         <el-table-column label="X">
           <template #default="scope">
             {{ scope.row.x }}
@@ -37,8 +35,6 @@ import BookTypeOption from './excel/components/BookTypeOption'
 import { parseTime } from '@/utils'
 import { create, all } from 'mathjs'
 const config = {
-  // Default type of number
-  // Available options: 'number' (default), 'BigNumber', or 'Fraction'
   number: 'Fraction'
 }
 const today = new Date()
@@ -57,8 +53,16 @@ export default {
     }
   },
   props: {
-    data: [Object, Array],
-    ecuacionTabla: [Number, String],
+    data: {
+      type: [Object, Array],
+      default: function() {
+        return []
+      }
+    },
+    ecuacionTabla: {
+      type: String,
+      default: ''
+    },
     isExport: {
       type: Boolean,
       default: false
@@ -79,7 +83,6 @@ export default {
   },
   computed: {
     nuevaEcuacionTabla() {
-      console.log(this.ecuacionTabla.replaceAll('sqrt', `√`))
       return this.ecuacionTabla.replaceAll('sqrt', `√`).replaceAll('()', '').replaceAll('log10', 'Log').replaceAll('log', 'Ln')
     }
   },

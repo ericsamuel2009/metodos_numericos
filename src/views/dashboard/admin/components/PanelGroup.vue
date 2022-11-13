@@ -91,7 +91,6 @@ export default {
       'permission_routes'
     ]),
     arrayIntegrales() {
-      console.log(this.permission_routes.filter(x => (!(x.hidden) && x.alwaysShow)))
       return this.permission_routes.filter(x => (!(x.hidden) && x.alwaysShow))
     }
   }
