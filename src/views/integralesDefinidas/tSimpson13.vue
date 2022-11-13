@@ -172,7 +172,7 @@ export default {
       lineChartData: { },
       ecuacionInputElement: null,
       myBackToTopStyle: {
-        right: '50px',
+        right: '10px',
         bottom: '50px',
         width: '40px',
         height: '40px',
