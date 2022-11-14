@@ -11,8 +11,10 @@
         >
           <el-card class="box-card">
             <div slot="header" class="clearfix">
-              <span><b>Metodo Simpson 3/8</b></span> <i class="el-icon-arrow-right" /> <MostrarNuevaEcuacion :nueva-ecuacion="ecuacion" :valor-superior="valorSuperior" :valor-inferior="valorInferior" />
+              <span><b id="titulo-s38">Metodo Simpson 3/8</b></span> <i class="el-icon-arrow-right" />
+              <MostrarNuevaEcuacion id="mostrarNuevaEcuacion" :nueva-ecuacion="ecuacion" :valor-superior="valorSuperior" :valor-inferior="valorInferior" />
               <el-button
+                id="limpiarBtn"
                 style="float: right"
                 type="danger"
                 size="small"
@@ -20,6 +22,7 @@
                 @click="ecuacion = ''; loopTabla = []; valorSuperior = 0; valorInferior = 0; lineChartData = {}"
               >Limpiar Ecuacion</el-button>
               <el-button
+                id="calcularBtn"
                 style="float: right"
                 type="primary"
                 :disabled="!ecuacion"
@@ -29,14 +32,14 @@
               >Calcular</el-button>
             </div>
             <div>
-              <Ecuaciones @symbolTriggerEvent:add="agregarSimbol" />
-              <el-input
-                v-model.number="valorSuperior"
-                placeholder="b"
-                size="mini"
-                class="inputIntegral"
-              />
-              <div>
+              <Ecuaciones id="ecuacionesBtn" @symbolTriggerEvent:add="agregarSimbol" />
+              <div id="tipearFormula">
+                <el-input
+                  v-model.number="valorSuperior"
+                  placeholder="b"
+                  size="mini"
+                  class="inputIntegral"
+                />
                 <h1 style="margin-top: auto; margin-bottom: -40px">
                   ∫
                   <el-input
@@ -47,13 +50,13 @@
                     placeholder="Ingrese Ecuacion"
                   />
                 </h1>
+                <el-input
+                  v-model.number="valorInferior"
+                  placeholder="a"
+                  size="mini"
+                  class="inputIntegral"
+                />
               </div>
-              <el-input
-                v-model.number="valorInferior"
-                placeholder="a"
-                size="mini"
-                class="inputIntegral"
-              />
             </div>
           </el-card>
         </el-col>
@@ -68,7 +71,7 @@
             <div slot="header" class="clearfix">
               <span><b>Formula</b></span>
             </div>
-            <div>
+            <div id="deltaResultado">
               <i class="mdi mdi-delta" /> =
               <div class="fraction">
                 <span>{{ valorSuperior }} - {{ valorInferior }}</span>
@@ -93,7 +96,7 @@
               <span><b>Las Particiones</b></span>
             </div>
             <tablaParticiones is-export :export-file-name="`motodoTSimpson38`" :data="loopTabla" :ecuacion-tabla="ecuacionTabla" />
-            <el-card class="box-card">
+            <el-card id="totalesSigma" class="box-card">
               <i class="mdi mdi-sigma" /> = {{ sumatoriaEcuacion }} <i class="mdi mdi-tilde" /> I = {{ resultadoDeLaFormula }}
             </el-card>
           </el-card>
@@ -113,7 +116,7 @@
               <span><b>Grafica 1</b></span>
             </div>
             <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-              <function-plot :chart-data="lineChartData" opc="opc1" />
+              <function-plot id="grafica1" :chart-data="lineChartData" opc="opc1" />
             </el-row>
           </el-card>
         </el-col>
@@ -132,7 +135,7 @@
               <span><b>Grafica 2</b></span>
             </div>
             <el-row style="background:#fff;padding:16px 16px 0;margin-bottom:32px;">
-              <function-plot :chart-data="lineChartData" opc="opc2" />
+              <function-plot id="grafica2" :chart-data="lineChartData" opc="opc2" />
             </el-row>
           </el-card>
         </el-col>

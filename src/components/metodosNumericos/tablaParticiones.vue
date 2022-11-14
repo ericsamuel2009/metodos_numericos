@@ -2,13 +2,14 @@
   <div id="tablaParticiones">
     <div>
 
-      <div v-show="isExport" class="fr">
+      <div v-show="isExport" id="exportacionExcel" class="fr">
         <BookTypeOption v-model="bookType" />
         <el-button :disabled="data.length == 0" :loading="downloadLoading" style="margin:0 0 20px 20px;" type="primary" icon="el-icon-document" @click="handleDownload">
           Exportar Excel
         </el-button>
       </div>
       <el-table
+        id="tablaParticiones"
         :data="data"
         border
         height="370"

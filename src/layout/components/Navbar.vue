@@ -5,6 +5,7 @@
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
     <div class="right-menu">
+      <Tour class="right-menu-item hover-effect" />
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
 
@@ -41,6 +42,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 // import SizeSelect from '@/components/SizeSelect'
 import Search from '@/components/HeaderSearch'
+import Tour from '@/components/tourGuia'
 
 export default {
   components: {
@@ -49,7 +51,8 @@ export default {
     // ErrorLog,
     Screenfull,
     // SizeSelect,
-    Search
+    Search,
+    Tour
   },
   computed: {
     ...mapGetters('app', [

@@ -246,7 +246,6 @@ export default {
           return model.recurrenceRule;
       },
       popupDetailBody: function(model) {
-        console.log(model);
           return model.body;
       },
       taskView: true,
@@ -309,7 +308,6 @@ export default {
       this.dateRange = dateRangeText
     },
     onClickNavi(event) {
-      console.log(event.target)
       if (event.target.tagName === 'BUTTON') {
         const { target } = event
         let action = target.dataset
@@ -362,31 +360,8 @@ export default {
       //     end: '2022-05-05T17:31:00+09:00'
       //   }
       // ],
-      console.log(this.scheduleList)
     },
     onAfterRenderSchedule(res) {
-      console.log(
-        '🚀 ~ file: index.vue ~ line 119 ~ onAfterRenderSchedule ~ e',
-        res
-      )
-      console.group('onAfterRenderSchedule')
-      console.log('Schedule Info : ', res.schedule)
-      console.groupEnd()
-    },
-    onBeforeCreateSchedule(e) {
-      console.log(
-        '🚀 ~ file: index.vue ~ line 123 ~ onBeforeCreateSchedule ~ e',
-        e
-      ) // CUANDO SE GUARDA DESDE EL FORMULARIO
-      // implement your code
-    },
-    onBeforeDeleteSchedule(res) {
-      console.log(
-        '🚀 ~ file: index.vue ~ line 127 ~ onBeforeDeleteSchedule ~ e',
-        res
-      )
-      console.group('onBeforeDeleteSchedule')
-      console.log('Schedule Info : ', res.schedule)
       console.groupEnd()
 
       const idx = this.scheduleList.findIndex(
