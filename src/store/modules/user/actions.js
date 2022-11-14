@@ -51,8 +51,6 @@ export function getInfo({ commit, state }) {
         if (!roles || roles.length <= 0) {
           reject('getInfo: roles must be a non-null array!')
         }
-
-        console.log({ roles, name, avatar, introduction })
         commit('SET_ROLES', roles)
         commit('SET_NAME', name)
         commit('SET_AVATAR', avatar)

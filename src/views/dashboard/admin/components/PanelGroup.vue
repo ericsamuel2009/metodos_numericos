@@ -1,72 +1,25 @@
 <template>
-  <el-row :gutter="40" class="panel-group">
+  <el-row id="panelGroup" :gutter="40" class="panel-group">
     <router-link v-for="main in arrayIntegrales[0].children" :key="main.path" :to="{name : main.name}">
       <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-        <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
+        <div :id="`metodo-${returnID(main.meta.titleDashboard)}`" class="card-panel" @click="handleSetLineChartData('newVisitis')">
           <div class="card-panel-icon-wrapper icon-people">
-            <!-- <svg-icon icon-class="peoples" class-name="card-panel-icon" /> -->
             <i style="font-size: 3em;" :class="`mdi ${main.meta.icon}`" />
           </div>
           <div class="card-panel-description">
             <div class="card-panel-text">
               {{ main.meta.titleDashboard }}
             </div>
-            <!-- <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" /> -->
           </div>
         </div>
       </el-col>
     </router-link>
-    <!-- <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-          <svg-icon icon-class="message" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Messages
-          </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <svg-icon icon-class="money" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Purchases
-          </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <svg-icon icon-class="shopping" class-name="card-panel-icon" />
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Shoppings
-          </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col> -->
   </el-row>
 </template>
 
 <script>
-// import CountTo from 'vue-count-to'
 import { mapGetters } from 'vuex'
-// import AppLink from '@/layout/components/Sidebar/Link.vue'
 export default {
-  components: {
-    // AppLink
-    // CountTo
-  },
   data: function() {
     return {
       integrales: []
@@ -75,6 +28,9 @@ export default {
   methods: {
     handleSetLineChartData(type) {
       this.$emit('handleSetLineChartData', type)
+    },
+    returnID(title) {
+      return title.replaceAll(' ', '_')
     }
     // resolvePath(routePath) {
     //   if (isExternal(routePath)) {
@@ -93,6 +49,8 @@ export default {
     arrayIntegrales() {
       return this.permission_routes.filter(x => (!(x.hidden) && x.alwaysShow))
     }
+  },
+  filters: {
   }
 }
 </script>
